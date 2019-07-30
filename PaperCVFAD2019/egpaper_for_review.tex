@@ -25,22 +25,20 @@
 \begin{document}
 
 %%%%%%%%% TITLE
-\title{CALVIS: Chest, wAist and peLVIS circumference from 3D human body meshes for deep learning}
+\title{CALVIS: Chest, wAist and peLVIS circumference from 3D human body meshes 
+as ground truth for deep learning}
 
-\author{First Author\\
-Institution1\\
-Institution1 address\\
-{\tt\small firstauthor@i1.org}
+\author{Yansel González Tejeda\\
+Paris Lodron University of Salzburg\\
+{\tt\small yansel.gonzalez-tejeda@stud.sbg.ac.at}
 % For a paper whose authors are all at the same institution,
 % omit the following lines up until the closing ``}''.
 % Additional authors and addresses can be added with ``\and'',
 % just like the second author.
 % To save space, use either the email address or home page, not both
 \and
-Second Author\\
-Institution2\\
-First line of institution2 address\\
-{\tt\small secondauthor@i2.org}
+Helmut Mayer\\
+{\tt\small helmut@cosy.sbg.ac.at}
 }
 
 \maketitle
@@ -49,25 +47,97 @@ First line of institution2 address\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-   The ABSTRACT is to be in fully-justified italicized text, at the top
-   of the left-hand column, below the author and affiliation
-   information. Use the word ``Abstract'' as the title, in 12-point
-   Times, boldface type, centered relative to the column, initially
-   capitalized. The abstract is to be in 10-point, single-spaced type.
-   Leave two blank lines after the Abstract, then begin the main text.
-   Look at previous ICCV abstracts to get a feel for style and length.
+   In this paper we present CALVIS, a method to calculate chest, waist and 
+   pelvis circumference from 3D human body meshes. The idea is to use these 
+   human body dimensions as ground truth for deep learning. Previous work had 
+   used the large scale CAESAR dataset, calculated $\textit{manually}$ these 
+   anthropometrical measurements or directly acquired them from a person. The 
+   problem is that acquiring these data is a cost and time consuming endeavor. 
+   Hence, instead of measuring real people, we employ a generative model of 
+   humans, which is able to generate any number of humans with different shapes 
+   and poses from a single human template. We then compute chest, waist and 
+   pelvis circumference from these models (represented as a 3D mesh) to 
+   balabla. We conduct two experiments. In the first experiment we synthesize 
+   10 human body meshes. Then we apply CALVIS to calculate chest, waist and 
+   pelvis circumference. We evaluate the results qualitatively. We observe that 
+   the measurements can indeed be used to estimate the shape of a person. The 
+   second experiment serves as a proof-of-concept where we use the calculated 
+   human dimensions as a ground truth to train an artificial neural network. 
+   The idea is to establish the plausibility of our approach. After having 
+   trained the network with our 
+   data, we proof that the network is able to conduct this task.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
 \section{Introduction}
 
+The general idea is to train a prediction model (in our case a {\em 
+convolutional neural network} (CNN)) with examples of images of humans whose 
+body measurements are known, and use the trained model as a predictor of body 
+dimensions given arbitrary images of humans. The main problem with this 
+approach is a sufficient number of available training data, as acquiring these 
+data is a cost and time consuming endeavor. Hence, instead of measuring real 
+people, we employ a generative model of humans, which is able to generate any 
+number of humans with different shapes and poses from a single human template. 
+We then compute the body dimensions algorithmically from these models 
+(represented as a 3D mesh) to be used as ground truth for synthetic images of 
+the model.
+
 We conduct two experiments. In the first experiment we synthesize 10 human body meshes. Then we apply our method to calculate chest, waist and pelvis circumference. We evaluate the results qualitatively. We observe that the measurements can indeed be used to estimate the shape of a person. The second experiment serves as a proof-of-concept where we input the calculated human dimensions to an artificial neural network. The idea is to establish the plausibility of our approach. After having trained the network with our data, we proof that the network is able to conduct this task.
 
-Problem statement: given a 3D human body mesh $\mathcal{M}$ we look for a method able to automatically output chest, waist and pelvis circumference.
+Problem statement: given a 3D human body mesh $\mathcal{M}$ we look for a 
+method capable to automatically output chest, waist and pelvis circumference.
 
 %------------------------------------------------------------------------
 \section{Approach}
-We asume that the body mesh has RTP orientation. If the mesh has another orientation we can always rotate and translate the mesh to brig it to RTP orientation. Next, we slice the mesh with a 0,1mm. The planes intersecting the body contain countour. We use the library trimesh to calculate the length of the perimeter. 
+In this work we synthesize 3D human meshes using the SMPL
+model \cite{Loper.2015}. This model is at its top level a skinned articulated 
+model, i.e., 
+consists of a 
+surface mesh that mimics the skin and a skeleton related to that mesh. It is 
+defined by a mean 
+template shape represented by a vector of $N$ concatenated vertices 
+$\mathbf{\bar{T}}$ in the zero pose, $\vec{\theta}$. In order to synthesize a 
+new human mesh one has to deform the provided template mesh by 
+setting shape parameters $\vec{\beta}$ and pose parameters $\vec{\theta}$. The 
+model provides learned parameters
+\begin{equation} \label{eq:smpl_params}
+\Phi = \{\mathbf{\bar{T}}, \mathcal{W}, \mathcal{S}, \mathcal{J}, 
+\mathcal{P}\}
+\end{equation}
+As mentioned above $\mathbf{\bar{T}}$ is the mean template shape. The weight 
+matrix $\mathcal{W}$ represents how much the rotation of skeleton parts affects 
+the vertices. In addition, the matrices $\mathcal{S}$ and $\mathcal{P}$ define 
+linear functions that are used to deform $\mathbf{\bar{T}}$ and the matrix 
+$\mathcal{J}$ predicts skeleton rest joint locations from vertices in the rest 
+pose. We held fix these parameters during the synthesis.
+
+Let us consider a human body mesh $\mathcal{M}$. Our method requires that 
+$\mathcal{M}$ is standing with arms raised 
+parallel to the 
+ground at shoulder height at a $90^\circ$ angle. In the line 
+of previous work (\cite{Dibra.2016a})), we name this pose the zero (also 
+normalized (rf)) pose $\vec{\theta}^*$. Additionally, we assume that the mesh 
+has LSA orientation, e.g., x, y and z axis are positively directed from 
+right-to-left, inferior-to-superior and posterior-to-anterior, respectively. If 
+the mesh has another orientation we can always apply transformations to orient 
+it LSA.
+
+Intuitively, we would like to measure the chest circumference bellow the arms 
+at the widest part of the torso and the waist circumference at the 
+narrowest part after the chest but above the hips. Similarly, the hip 
+circumference is measured often around the widest part of hips and buttocks. We 
+can formalize this intuition by considering the cross-sectional length of the 
+2D curve along the y-axis. Since $\mathcal{M}$ is triangulated, we can use a 
+plane $\boldsymbol{\pi}$ to intersect the mesh. The boundary of this 
+intersection is a collection of connected segments $s_i$. Therefore, we can 
+determine this boundary length as
+\begin{align}
+BL = \sum_{i = 1}^{i = n}s_i
+\end{align}  
+
+Next, starting from the bounding box top part we cut the mesh into evenly 
+spaced slices $m$ and compute the total sum. 
 
 %------------------------------------------------------------------------
 \section{Experiments and Results}
