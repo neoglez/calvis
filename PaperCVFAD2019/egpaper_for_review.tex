@@ -1,0 +1,88 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{iccv}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+% \iccvfinalcopy % *** Uncomment this line for the final submission
+
+\def\iccvPaperID{****} % *** Enter the ICCV Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ificcvfinal\pagestyle{empty}\fi
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{CALVIS: Chest, wAist and peLVIS circumference from 3D human body meshes for deep learning}
+
+\author{First Author\\
+Institution1\\
+Institution1 address\\
+{\tt\small firstauthor@i1.org}
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\and
+Second Author\\
+Institution2\\
+First line of institution2 address\\
+{\tt\small secondauthor@i2.org}
+}
+
+\maketitle
+% Remove page # from the first page of camera-ready.
+\ificcvfinal\thispagestyle{empty}\fi
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+   The ABSTRACT is to be in fully-justified italicized text, at the top
+   of the left-hand column, below the author and affiliation
+   information. Use the word ``Abstract'' as the title, in 12-point
+   Times, boldface type, centered relative to the column, initially
+   capitalized. The abstract is to be in 10-point, single-spaced type.
+   Leave two blank lines after the Abstract, then begin the main text.
+   Look at previous ICCV abstracts to get a feel for style and length.
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+
+We conduct two experiments. In the first experiment we synthesize 10 human body meshes. Then we apply our method to calculate chest, waist and pelvis circumference. We evaluate the results qualitatively. We observe that the measurements can indeed be used to estimate the shape of a person. The second experiment serves as a proof-of-concept where we input the calculated human dimensions to an artificial neural network. The idea is to establish the plausibility of our approach. After having trained the network with our data, we proof that the network is able to conduct this task.
+
+Problem statement: given a 3D human body mesh $\mathcal{M}$ we look for a method able to automatically output chest, waist and pelvis circumference.
+
+%------------------------------------------------------------------------
+\section{Approach}
+We asume that the body mesh has RTP orientation. If the mesh has another orientation we can always rotate and translate the mesh to brig it to RTP orientation. Next, we slice the mesh with a 0,1mm. The planes intersecting the body contain countour. We use the library trimesh to calculate the length of the perimeter. 
+
+%------------------------------------------------------------------------
+\section{Experiments and Results}
+
+
+%------------------------------------------------------------------------
+\section{Conclusion}
+
+You must include your signed IEEE copyright release form when you submit
+your finished paper. We MUST have this form before your paper can be
+published in the proceedings.
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{egbib}
+}
+
+\end{document}
