@@ -185,12 +185,13 @@ use a plane $\boldsymbol{\pi}$ parallel to the floor to intersect the mesh.
 Since $\mathcal{M}$ is 
 triangulated, the boundary of this 
 intersection is a collection of segments $s_i$. Therefore, we can 
-determine the boundary length as at point j
+determine the boundary length by specifying a point along the y-axis $j$ as
 \begin{align}
-\mathcal{BL}_j = \sum_{i = 1}^{i = n}s_i
+\mathcal{BL}(\mathcal{M}, \boldsymbol{\pi}, j) = \sum_{i = 
+1}^{i = n}s_i
 \end{align}
 
-Note that for cross sections where $\boldsymbol{\pi}$ intersects the legs two 
+Note that for cross sections where $\boldsymbol{\pi}$ intersects the legs, two 
 disconnected curves will appear. That is by no means a problem because they are 
 still a collection of segment with non-zero length.
 
@@ -199,27 +200,62 @@ still a collection of segment with non-zero length.
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
 		\includegraphics[width=\linewidth]{Figure_1.eps}
 	\end{center}
-	\caption{Human Body Mesh Signature for male and female meshes}
+	\caption{Human Body Mesh Signature for male and female meshes. The 
+		function resembles a rotated silhouette of the human body and exhibits 
+		several \textit{extrema}.}
 	\label{fig:hbm_signature}
 \end{figure}
 
-Next, starting from the top of the bounding box we cut the mesh into evenly 
-spaced slices $m$. For every slice j, we compute $BL_j$. Finally, we can 
-construct the human body \textbf{mesh signature} $\mathcal{MS}$ of mesh 
-$\mathcal{M}$ in the zero pose $\vec{\theta}^*$
+Next, we assemble the mesh slide length vector $\vec{\mathcal{L}}$. Starting 
+from the 
+top $j_t$ of the bounding box we cut the mesh into 
+evenly 
+$m$-meters spaced slices until we reach the bounding box bottom $j_b$. For 
+every 
+slice at point $j$, we compute $\mathcal{BL}(j)$.
 
 \begin{align}
-\mathcal{MS}(\mathcal{M}, \vec{\theta}^*, j) = \mathcal{BL}_j, \, j \in \{1, 
-\cdots, m\}
+\vec{\mathcal{L}} = \mathcal{BL}(j), \, j 
+\in 
+\{j_t, j_t+m, \cdots, j_b\}
 \end{align}
 
-Figure \ref{fig:hbm_signature} shows the $\mathcal{MS}$ for two meshes. The 
-function resembles a rotated silhouette of the human body and exhibits a number 
-of critical points. 
+Finally, we can construct the human body \textbf{mesh signature} $\mathcal{MS}: 
+\mathbb{Z}^+ \to \mathbb{R}$ of mesh $\mathcal{M}$ sliced iterative by plane 
+$\boldsymbol{\pi}$ every $m$-meters by setting its value to the value of 
+$\vec{\mathcal{L}}$ at 
+slide index $x$
+
+\begin{align}\label{eq:mesh_signature}
+\mathcal{MS}(\mathcal{M}, \boldsymbol{\pi}, m) = \vec{\mathcal{L}}(x), \, x \in 
+\{0, 1, \cdots\}
+\end{align}
+
+Figure \ref{fig:hbm_signature} shows the $\mathcal{MS}$ of two meshes (male 
+and female) for 
+$m=0,001$ and plane $\boldsymbol{\pi}$ parallel to the floor (with normal $(0, 
+1,0)$) using the library trimesh \cite{trimesh}. The 
+function resembles a rotated silhouette of the human body and exhibits several 
+\textit{extrema}.
+
+\subsection{Mesh Signature Extrema}
+
+By comparing neighboring values of the mesh signature $\mathcal{MS}$ as defined 
+in equation \ref{eq:mesh_signature} we find several \textit{extrema}. In 
+general, we use these \textit{extrema} as features to 
+calculate the human dimensions. More specifically, we assume that:
+\begin{enumerate}
+	\item The global maximum $M_g$ represents the length of the largest path 
+	around the arms.
+	\item The local maximum $M_{hc}$ with largest value other than $M_g$ 
+	immediately posterior to it represents the hip circumference.
+	\item The local minimum $M_{wc}$ posterior to $M_g$ but prior to $M_{hc}$ 
+	represents hip circumference.
+	\item The local maximum $M_{cc}$ posterior to $M_g$ but prior to $M_{wc}$ 
+	represents chest circumference.
+\end{enumerate}
 
 
-
-\subsection{Critical Points on Mesh Signature}
 
  
 
