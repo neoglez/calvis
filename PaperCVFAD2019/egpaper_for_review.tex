@@ -185,7 +185,8 @@ use a plane $\boldsymbol{\pi}$ parallel to the floor to intersect the mesh.
 Since $\mathcal{M}$ is 
 triangulated, the boundary of this 
 intersection is a collection of segments $s_i$. Therefore, we can 
-determine the boundary length by specifying a point along the y-axis $j$ as
+determine the boundary length by specifying a point along the y-axis $j \in 
+\mathbb{R}$ as
 \begin{align}
 \mathcal{BL}(\mathcal{M}, \boldsymbol{\pi}, j) = \sum_{i = 
 1}^{i = n}s_i
@@ -208,51 +209,57 @@ still a collection of segment with non-zero length.
 
 Next, we assemble the mesh slide length vector $\vec{\mathcal{L}}$. Starting 
 from the 
-top $j_t$ of the bounding box we cut the mesh into 
-evenly 
-$m$-meters spaced slices until we reach the bounding box bottom $j_b$. For 
-every 
-slice at point $j$, we compute $\mathcal{BL}(j)$.
+top $j_t$ of the bounding box we sliced iterative mesh $\mathcal{M}$ with plane 
+$\boldsymbol{\pi}$ every $m$-meters until we reach the bounding box bottom 
+$j_b$. For every slice at point $j$, we compute $\mathcal{BL}(j)$.
 
 \begin{align}
-\vec{\mathcal{L}} = \mathcal{BL}(j), \, j 
+\vec{\mathcal{L}}(\mathcal{M}, \boldsymbol{\pi}, m) = \mathcal{BL}(j), \, j 
 \in 
 \{j_t, j_t+m, \cdots, j_b\}
 \end{align}
 
 Finally, we can construct the human body \textbf{mesh signature} $\mathcal{MS}: 
-\mathbb{Z}^+ \to \mathbb{R}$ of mesh $\mathcal{M}$ sliced iterative by plane 
-$\boldsymbol{\pi}$ every $m$-meters by setting its value to the value of 
-$\vec{\mathcal{L}}$ at 
-slide index $x$
+\mathbb{Z}^+ \to \mathbb{R}$ that maps every slice index $k \in \{0, 1, \cdots, 
+|\mathcal{L}|-1\}$ to the corresponding boundary length $\mathcal{BL}(j)$ in 
+the mesh slide vector $\vec{\mathcal{L}}$.
 
 \begin{align}\label{eq:mesh_signature}
-\mathcal{MS}(\mathcal{M}, \boldsymbol{\pi}, m) = \vec{\mathcal{L}}(x), \, x \in 
-\{0, 1, \cdots\}
+\mathcal{MS}(k) = \mathcal{BL}(j)
 \end{align}
 
 Figure \ref{fig:hbm_signature} shows the $\mathcal{MS}$ of two meshes (male 
 and female) for 
 $m=0,001$ and plane $\boldsymbol{\pi}$ parallel to the floor (with normal $(0, 
-1,0)$) using the library trimesh \cite{trimesh}. The 
-function resembles a rotated silhouette of the human body and exhibits several 
+1,0)$) using the library trimesh \cite{trimesh}. Note that the function as 
+defined by equation \ref{eq:mesh_signature} is bounded and not continuous. It 
+resembles a rotated silhouette of the human body and exhibits several 
 \textit{extrema}.
 
 \subsection{Mesh Signature Extrema}
 
 By comparing neighboring values of the mesh signature $\mathcal{MS}$ as defined 
 in equation \ref{eq:mesh_signature} we find several \textit{extrema}. In 
-general, we use these \textit{extrema} as features to 
+general, we expect these \textit{extrema} to be adequate features to 
 calculate the human dimensions. More specifically, we assume that:
 \begin{enumerate}
 	\item The global maximum $M_g$ represents the length of the largest path 
-	around the arms.
+	around the arms. From a topographic point of view $M_g$ is the highest peak 
+	of $\mathcal{MS}$.   
 	\item The local maximum $M_{hc}$ with largest value other than $M_g$ 
 	immediately posterior to it represents the hip circumference.
 	\item The local minimum $M_{wc}$ posterior to $M_g$ but prior to $M_{hc}$ 
-	represents hip circumference.
-	\item The local maximum $M_{cc}$ posterior to $M_g$ but prior to $M_{wc}$ 
-	represents chest circumference.
+	represents waist circumference.
+	\item from a topograhpic point of view $M_g$ is a peak from  	
+	The local maximum $M_{cc}$ posterior to $M_g$ but prior to $M_{wc}$ 
+	represents 
+	chest circumference. If this local maximum does not exist we set $M_{cc}$ 
+	to the value of the path $\mathcal{BL}(j_{cc})$ with largest value $M_{cc}$ 
+	posterior 
+	to 
+	$M_g$ and difference at least $\delta$ to it but prior to $M_{wc}$	
+	represents 
+	chest circumference.
 \end{enumerate}
 
 
@@ -263,8 +270,9 @@ calculate the human dimensions. More specifically, we assume that:
 \section{Experiments and Results}
 
 We conduct two experiments. In the first experiment we synthesize 10 human body 
-meshes. Then we apply our method to calculate chest, waist and pelvis 
-circumference. We evaluate the results qualitatively. We observe that the 
+meshes. Then we apply CALVIS to calculate chest, waist and pelvis 
+circumference. We evaluate the results qualitatively by comparing our method 
+with \cite{Dibra.2016b}. We observe that the 
 measurements can indeed be used to estimate the shape of a person. The second 
 experiment serves as a proof-of-concept where we input the calculated human 
 dimensions to an artificial neural network. The idea is to establish the 
