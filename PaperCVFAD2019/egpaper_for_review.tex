@@ -14,7 +14,7 @@
 % run, let it finish, and you should be clear).
 \usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
 
-% \iccvfinalcopy % *** Uncomment this line for the final submission
+ \iccvfinalcopy % *** Uncomment this line for the final submission
 
 \def\iccvPaperID{****} % *** Enter the ICCV Paper ID here
 \def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
@@ -38,6 +38,7 @@ Paris Lodron University of Salzburg\\
 % To save space, use either the email address or home page, not both
 \and
 Helmut Mayer\\
+Paris Lodron University of Salzburg\\
 {\tt\small helmut@cosy.sbg.ac.at}
 }
 
@@ -58,15 +59,15 @@ Helmut Mayer\\
    the mesh. Second, we calculate the cross sections length and establish a 
    signature for the body represented by the mesh. Finally, using this 
    signature we are able to calculate the chest, waist and pelvis 
-   circumference by searching for critical points. We conduct two experiments. 
+   circumference by searching for extrema. We conduct two experiments. 
    In the first experiment we synthesize 10 human body meshes. Then we apply 
    CALVIS to calculate chest, waist and pelvis circumference. We evaluate the 
    results qualitatively. We observe that the measurements can indeed be used 
-   to estimate the shape of a person. The second experiment serves as a 
-   proof-of-concept where we use the calculated human dimensions as a ground 
-   truth to train a small CNN. The idea is to establish the plausibility of our 
-   approach. After having trained the network with our data, we demonstrate 
-   that learning converges, achieving a 3 percent prediction error. 
+   to estimate the shape of a person. The second experiment asses the 
+   plausibility of our approach where we use the calculated human dimensions as 
+   a ground truth to train a small CNN. After having trained the network with 
+   our data, we demonstrate that learning converges, achieving $x$ percent 
+   prediction error. 
    Furthermore, we make the implementation of CALVIS publicly available to 
    advance the field.
 \end{abstract}
@@ -127,16 +128,11 @@ measurements is to use a camera model to render
 images. Finally, in possession of this ground truth we can 
 input this images to the learning algorithm and perform inference.
 
-Explain method here in a very succinct way. balslfas iourgioafdnsva 
-ihasoifghksv kiashdikhjioapgjgf oiasjojaspofdgjaposjg aisfhdgipoashfgihasghj 
-aishgfiashgiahsfighaishg ihaspioghpaioshgpiasfgpi 
-pjasoip09erujfdnaihg8qzßehgiqhfe.
-
 Problem statement: given a 3D human body mesh $\mathcal{M}$ we look for a 
 method capable to automatically output chest, waist and pelvis circumference.
 
 %------------------------------------------------------------------------
-\section{Approach}
+\section{Approach}\label{sec:approach}
 
 In this work we synthesize 3D human meshes using the SMPL
 model \cite{Loper.2015}. This model is at its top level a skinned articulated 
@@ -162,7 +158,7 @@ linear functions that are used to deform $\mathbf{\bar{T}}$ and the matrix
 $\mathcal{J}$ predicts skeleton rest joint locations from vertices in the rest 
 pose. We held fix these parameters during the synthesis.
 
-\subsection{Human Body Mesh Signature}
+\subsection{Human Body Mesh Signature}\label{subsec:hbm_signature}
 Let us consider a human body mesh $\mathcal{M}$. Our method requires that 
 $\mathcal{M}$ is standing with arms raised 
 parallel to the 
@@ -176,7 +172,7 @@ LSA-align it.
 
 Intuitively, we would like to measure the chest circumference bellow the arms 
 at the widest part of the torso and the waist circumference at the 
-narrowest part after the chest but above the hips. Similarly, the hip 
+narrowest part after the chest but above the hips. Similarly, the pelvis 
 circumference is measured often around the widest part of hips and buttocks. We 
 can formalize this intuition by considering the cross-sectional length of the 
 2D intersection curves (\cite{book.compu.topo}) along the y-axis. Moreover, we 
@@ -203,7 +199,8 @@ still a collection of segment with non-zero length.
 	\end{center}
 	\caption{Human Body Mesh Signature for male and female meshes. The 
 		function resembles a rotated silhouette of the human body and exhibits 
-		several \textit{extrema}.}
+		several \textit{extrema}. See section 
+		\ref{subsec:mesh_signature_extrema} for discussion of these extrema.}
 	\label{fig:hbm_signature}
 \end{figure}
 
@@ -236,7 +233,7 @@ defined by equation \ref{eq:mesh_signature} is bounded and not continuous. It
 resembles a rotated silhouette of the human body and exhibits several 
 \textit{extrema}.
 
-\subsection{Mesh Signature Extrema}
+\subsection{Mesh Signature Extrema}\label{subsec:mesh_signature_extrema}
 
 By comparing neighboring values of the mesh signature $\mathcal{MS}$ as defined 
 in equation \ref{eq:mesh_signature} we find several \textit{extrema}. In 
@@ -245,21 +242,18 @@ calculate the human dimensions. More specifically, we assume that:
 \begin{enumerate}
 	\item The global maximum $M_g$ represents the length of the largest path 
 	around the arms. From a topographic point of view $M_g$ is the highest peak 
-	of $\mathcal{MS}$.   
-	\item The local maximum $M_{hc}$ with largest value other than $M_g$ 
-	immediately posterior to it represents the hip circumference.
-	\item The local minimum $M_{wc}$ posterior to $M_g$ but prior to $M_{hc}$ 
+	of $\mathcal{MS}$. A horizontal line at height proportion $h$ of the peak 
+	intersects 
+	it at two points left $p_l$ and right $p_r$.
+	\item The local maximum $M_{pc}$ with largest value other than $M_g$ 
+	immediately posterior to $p_r$ represents the pelvis circumference.
+	\item The local minimum $M_{wc}$ posterior to $p_r$ but prior to $M_{pc}$ 
 	represents waist circumference.
-	\item from a topograhpic point of view $M_g$ is a peak from  	
-	The local maximum $M_{cc}$ posterior to $M_g$ but prior to $M_{wc}$ 
+	\item The local maximum $M_{cc}$ posterior to $p_r$ but prior to $M_{wc}$ 
 	represents 
 	chest circumference. If this local maximum does not exist we set $M_{cc}$ 
-	to the value of the path $\mathcal{BL}(j_{cc})$ with largest value $M_{cc}$ 
-	posterior 
-	to 
-	$M_g$ and difference at least $\delta$ to it but prior to $M_{wc}$	
-	represents 
-	chest circumference.
+	to the value of the path $\mathcal{BL}(j_{cc})$ with largest value in the 
+	interval $(p_l; M_{wc})$.
 \end{enumerate}
 
 
@@ -269,23 +263,25 @@ calculate the human dimensions. More specifically, we assume that:
 %------------------------------------------------------------------------
 \section{Experiments and Results}
 
-We conduct two experiments. In the first experiment we synthesize 10 human body 
-meshes. Then we apply CALVIS to calculate chest, waist and pelvis 
-circumference. We evaluate the results qualitatively by comparing our method 
-with \cite{Dibra.2016b}. We observe that the 
-measurements can indeed be used to estimate the shape of a person. The second 
-experiment serves as a proof-of-concept where we input the calculated human 
-dimensions to an artificial neural network. The idea is to establish the 
-plausibility of our approach. After having trained the network with our data, 
-we proof that the network is able to conduct this task.
+We conduct two experiments. In the first experiment we synthesize eight (four 
+female and four male) human body meshes using shape parameters provided by 
+SURREAL \cite{varol17_surreal}.
+The meshes reflect human figures characteristics such as bulky, slim, small and 
+tall subjects. Then we apply CALVIS to calculate chest, waist and pelvis 
+circumference. Since we do not have ground truth, we evaluate the results 
+qualitatively by comparing our method 
+with \cite{Dibra.2016b}.
+The second 
+experiment serves to asses the plausibility of our approach to use the 
+synthetic data for deep learning. We input the calculated human 
+dimensions to an artificial neural network. After having trained the network 
+with our data, we show that learning converges.
 
 
 %------------------------------------------------------------------------
 \section{Conclusion}
 
-You must include your signed IEEE copyright release form when you submit
-your finished paper. We MUST have this form before your paper can be
-published in the proceedings.
+The method can be optimized. Further research must be conducted.
 
 {\small
 \bibliographystyle{ieee}
