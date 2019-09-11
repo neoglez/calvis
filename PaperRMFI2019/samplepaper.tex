@@ -61,7 +61,7 @@ prediction error.
 Furthermore, we make the implementation of CALVIS publicly available to 
 advance the field.
 
-\keywords{First keyword  \and Second keyword \and Another keyword.}
+\keywords{Human Shape Estimation \and CNN \and Another keyword.}
 \end{abstract}
 %
 %
@@ -74,7 +74,8 @@ even health and mortality estimation. Researches had
 named this 
 measurements body intuitive controls (\cite{Allen.2003}), biometric 
 measurements (\cite{Sigal.2008}), body dimensions 
-(\cite{DBLP:conf/bmvc/ChenRC11}), semantical parameters (\cite{Yang.2014}), 
+(\cite{DBLP:conf/bmvc/ChenRC11}, European standard EN 13402), semantical 
+parameters (\cite{Yang.2014}), 
 traditional anthropometric 
 measurements 
 (\cite{Wuhrer2011}) or only ``shape" as in human shape estimation 
@@ -126,7 +127,11 @@ method capable to automatically output chest, waist and pelvis circumference.
 \section{Approach}\label{sec:approach}
 
 In this work we synthesize 3D human meshes using the SMPL
-model \cite{Loper.2015}. This model is at its top level a skinned articulated 
+model \cite{Loper.2015}. The generative nature of our approach establishes this 
+model as starting point (and not the 3D mesh). Nevertheless, our method is 
+flexible enough to begin the pipeline with a 3D mesh. In that case, an SMPL 
+model can be fitted to it, using the method of (rh) for example.
+This model is at its top level a skinned articulated 
 model, i.e., 
 consists of a 
 surface mesh that mimics the skin and a skeleton related to that mesh. It is 
@@ -163,8 +168,11 @@ LSA-align it.
 
 Intuitively, we would like to measure the chest circumference bellow the arms 
 at the widest part of the torso and the waist circumference at the 
-narrowest part after the chest but above the hips. Similarly, the pelvis 
-circumference is measured often around the widest part of hips and buttocks. We 
+narrowest part after the chest but above the hips. This intuition is compliant 
+with prior body dimensions standarised definitions (rf EN 13402 - 1). 
+Similarly, the pelvis 
+circumference is measured often (rf) around the widest part of hips and 
+buttocks. We 
 can formalize this intuition by considering the cross-sectional length of the 
 2D intersection curves \cite{book.compu.topo} along the y-axis. Moreover, we 
 can 
@@ -229,15 +237,22 @@ resembles a rotated silhouette of the human body and exhibits several
 By comparing neighboring values of the mesh signature $\mathcal{MS}$ as defined 
 in equation \ref{eq:mesh_signature} we find several \textit{extrema}. In 
 general, we expect these \textit{extrema} to be adequate features to 
-calculate the human dimensions. More specifically, we assume that:
+calculate the human dimensions. However, there is no consensus in the 
+literature regarding the method to calculate chest, waist and hip 
+circumference. While Yansel et al., 2020 define waist circumference as the 
+
+More specifically, we assume that:
 \begin{enumerate}
 	\item The global maximum $M_g$ represents the length of the largest path 
 	around the arms. From a topographic point of view $M_g$ is the highest peak 
 	of $\mathcal{MS}$. A horizontal line at height proportion $h$ of the peak 
 	intersects 
 	it at two points left $p_l$ and right $p_r$.
+	\item The plane $\boldsymbol{\pi}$ intersects the mesh $\mathcal{M}$ at the 
+	point where the left hip is located defining a path. The length of this 
+	path is $P_{lh}$.	
 	\item The local maximum $M_{pc}$ with largest value other than $M_g$ 
-	immediately posterior to $p_r$ represents the pelvis circumference.
+	immediately prior to $P_{lh}$ represents the pelvis circumference.	
 	\item The local minimum $M_{wc}$ posterior to $p_r$ but prior to $M_{pc}$ 
 	represents waist circumference.
 	\item The local maximum $M_{cc}$ posterior to $p_r$ but prior to $M_{wc}$ 
