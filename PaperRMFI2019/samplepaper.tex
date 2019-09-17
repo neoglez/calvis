@@ -9,6 +9,7 @@
 % be included in EPS format.
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{float}
 %
 % If you use the hyperref package, please uncomment the following line
 % to display URLs in blue roman font according to Springer's eBook style:
@@ -66,6 +67,7 @@ advance the field.
 %
 %
 %
+\section{Introduction}\label{sec:intro}
 \textbf{Motivation} 
 Predicting 3D human body measurements from images is crucial in several 
 scenarios 
@@ -120,12 +122,26 @@ measurements is to use a camera model to render
 images. Finally, in possession of this ground truth we can 
 input this images to the learning algorithm and perform inference.
 
-Problem statement: given a 3D human body mesh $\mathcal{M}$ we look for a 
+\textbf{Problem statement:} given a 3D human body mesh $\mathcal{M}$ we look 
+for a 
 method capable to automatically output chest, waist and pelvis circumference.
+
+\section{Related Work}\label{sec:rel_work}
 
 %------------------------------------------------------------------------
 \section{Approach}\label{sec:approach}
+To calculate the actual human body dimensions, we first need to formalize the 
+notion of chest, waist and pelvis of a 3D human body mesh. The starting point 
+is the model capable to represent that mesh, which we discuss in subsection 
+\ref{subsec:smpl_model}. Next, we define a mesh signature over that mesh in 
+subsection \ref{eq:mesh_signature} that allow us to formalize the human body 
+dimensions.
+Our strategy segmentates consist of segmentating the mesh torso in three 
+regions, namely chest, waist and pelvic regions. We then apply the formal 
+definitions and search for extrema and identify points in those regions that we 
+can interpret as the wanted body dimensions.  
 
+\subsection{SMPL Model of the Human Body}\label{subsec:smpl_model}
 In this work we synthesize 3D human meshes using the SMPL
 model \cite{Loper.2015}. The generative nature of our approach establishes this 
 model as starting point (and not the 3D mesh). Nevertheless, our method is 
@@ -262,6 +278,48 @@ More specifically, we assume that:
 	interval $(p_l; M_{wc})$.
 \end{enumerate}
 
+\subsection{Chest, Waist and Pelvis Regions 
+Segmentation}\label{subsec:three_regions}
+
+\subsubsection{Axilla recognition}\label{subsec:armpit_recog}
+As mentioned above, we would like to measure the chest circumference below the 
+armpit, also known as axilla. This raises the question whether we can recognize 
+the axilla based on 
+the mesh signature. We could then establish the location index as lower bound 
+for the search of chest location. There is consensus regarding the axilla 
+definition as the area of the human body underneath the shoulder joint 
+(\cite{MeSH.axilla}, \cite{FMA.axilla}, \cite{TA.axilla}). Therefore, we can 
+use the shoulder joint as a hint to locate the axilla and establish a lower 
+bound for the chest region. We then can combine this idea with the defintion 
+used in the garment industry, namely the maximum horizontal girth under the 
+armpits (axillae) (rh).
+Let us consider the left shoulder joint on in our skeleton model $J_{ls}$. We 
+cast a ray in direction $d$ outside the mesh. Since the joint $J_{ls}$ lies 
+inside the mesh, the ray intersects its surface at point $p_{axilla}$ (see 
+figure x).
+With this construction we can define the chest region $\mathcal{CR}$ as the 
+region where the slice index is bigger that the index of a slice with 
+y-coordinate is equal or greater than the axilla $y$-coordinate 
+$y_{p_{axilla}}$.
+
+\begin{align}
+\mathcal{CR} = \mathcal{BL}(j), \, j \in \{j_t, j_t+m, \cdots, j_b\}
+\end{align}
+
+Similarly, the waist region is
+
+\begin{align}
+\mathcal{WR} = \mathcal{BL}(j), \, j \in \{j_t, j_t+m, \cdots, j_b\}
+\end{align}
+
+Finally, the pelvic region is
+
+\begin{align}
+\mathcal{PR} = \mathcal{BL}(j), \, j \in \{j_t, j_t+m, \cdots, j_b\}
+\end{align}
+
+\subsection{Recognition by interval search}\label{subsec:interval_search}
+
 
 
 
@@ -282,6 +340,74 @@ experiment serves to asses the plausibility of our approach to use the
 synthetic data for deep learning. We input the calculated human 
 dimensions to an artificial neural network. After having trained the network 
 with our data, we show that learning converges.
+
+\subsection{Qualitative evaluation}\label{subsec:qualitative_eval}
+Here we evaluate our method qualitatively with method one and method two.
+\begin{figure}[H]
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+		\includegraphics[width=\linewidth]{subject_6_with_cutting_planes_on_joints.eps}
+	\end{center}
+	\caption{Qualitative evaluation for male and female meshes. We evaluate our 
+	method with method one and method two.}
+	\label{fig:qualitative_eval}
+\end{figure}
+
+Figure \ref{fig:qualitative_eval} shows the $\mathcal{MS}$ of two meshes (male 
+and female) for 
+$m=0,001$ and plane $\boldsymbol{\pi}$ parallel to the floor (with normal $(0, 
+1,0)$) using the library trimesh \cite{trimesh}. Note that the function as 
+defined by equation \ref{eq:mesh_signature} is bounded and not continuous. It 
+resembles a rotated silhouette of the human body and exhibits several 
+\textit{extrema}.
+
+\begin{figure}[h]
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+		\includegraphics[width=\linewidth]{Figure_1.eps}
+	\end{center}
+	\caption{Human Body Mesh Signature for male and female meshes. The 
+		function resembles a rotated silhouette of the human body and exhibits 
+		several \textit{extrema}. See section 
+		\ref{subsec:mesh_signature_extrema} for discussion of these extrema.}
+	\label{fig:qualitative_eval}
+\end{figure}
+
+\subsection{Learning convergence evaluation}\label{subsec:learn_conv}
+This experiment demonstrates the plausibility of using calvis to obtain data 
+that can be used as a ground truth for machine learning (in general) and 
+specifically as supervising signal for ANN.
+
+Figure \ref{fig:calvis_net} shows the our prototypical ANN calvis net where the 
+input is a synthetic image from a 3D mesh and the output are the three body 
+dimensions.
+
+Figure \ref{fig:learn_conv} shows that after epoch number 5 the estimation 
+error decreases and the learning converges.
+
+\begin{figure}[H]
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+		\includegraphics[width=\linewidth]{Figure_1.eps}
+	\end{center}
+	\caption{Human Body Mesh Signature for male and female meshes. The 
+		function resembles a rotated silhouette of the human body and exhibits 
+		several \textit{extrema}. See section 
+		\ref{subsec:mesh_signature_extrema} for discussion of these extrema.}
+	\label{fig:qualitative_eval}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+		\includegraphics[width=\linewidth]{Figure_1.eps}
+	\end{center}
+	\caption{Human Body Mesh Signature for male and female meshes. The 
+		function resembles a rotated silhouette of the human body and exhibits 
+		several \textit{extrema}. See section 
+		\ref{subsec:mesh_signature_extrema} for discussion of these extrema.}
+	\label{fig:qualitative_eval}
+\end{figure}
 
 
 %------------------------------------------------------------------------
