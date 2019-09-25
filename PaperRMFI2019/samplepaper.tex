@@ -233,31 +233,33 @@ flexible enough to begin the pipeline with a 3D mesh. In that case, an SMPL
 model can be fitted to the volumetric data, using the method described by 
 Varol et al., 2018 \cite{varol18_bodynet} for example.
 
-The SMPL model is at its top level a skinned articulated 
-model, i.e., 
+The SMPL model is at its top level a \textbf{skinned articulated 
+model}, i.e., 
 consists of a 
 surface mesh $\mathcal{M}$ that mimics the skin and a corresponding skeleton 
 $\mathbf{J}$. The mesh $\mathcal{M} \in \mathbb{R}^{3N}$, which is a boundary 
 representation stores 
 both the body geometry (vertex position) and topology (how the vertices are 
-connected). The skeleton $\mathbf{J}$ is defined by its endpoints (joints) 
-location in 3D space $j_i \in \mathbb{R}^3$  and its kinematic tree. Two 
+connected). The skeleton $\mathbf{J}$ is defined by its joints location in 3D 
+space $j_i \in \mathbb{R}^3$  and its kinematic tree. Two 
 connected 
-joints define a 'bone' $P_i$. Moreover, a child bone is rotated relative to its 
+joints define a `bone'. Moreover, a child bone is rotated relative to 
+its 
 connected parent. The pose $\vec{\theta}$ is the specification of every bone 
-rotation in angle-axis form plus an orientation for the root bone. 
+rotation plus an orientation for the root bone.
 
-More specifically, the SMPL model is defined by a template mesh (mean template 
-shape) $\mathbf{\bar{T}}$ represented by a vector of $N = 6890$ concatenated 
-vertices in the zero pose, $\vec{\theta}^*$. The skeleton has $K = 23$ joints, 
-therefore a pose vector is defined by $|\vec{\theta}| = 3 \times 23 + 3 = 72$ 
-parameters. In order 
-to synthesize a new human mesh one has to deform the 
-provided template mesh by 
+The SMPL model is also a \textbf{deformable model} 
+\cite{Terzopoulos:1987:EDM:37401.37427}. In order to 
+synthesize a 
+new human mesh one has to deform the provided template mesh by 
 setting shape parameters $\vec{\beta}$. Pose parameters $\vec{\theta}$ are used 
-for animation. 
-The 
-model provides learned parameters
+for animation.
+
+More specifically, the model is defined by a template mesh (mean template 
+shape) $\mathbf{\bar{T}}$ represented by a vector of $N = 6890$ concatenated 
+vertices in the zero pose, $\vec{\theta}^*$. The skeleton has $K = 23$ joints.
+
+As an \textbf{statistical model}, SMPL provides learned parameters
 \begin{equation} \label{eq:smpl_params}
 \Phi = \{\mathbf{\bar{T}}, \mathcal{W}, \mathcal{S}, \mathcal{J}, 
 \mathcal{P}\}.
@@ -324,85 +326,66 @@ use the shoulder joint as a hint to locate the axilla and establish a upper
 bound for the chest region. More generally, we can use the 
 skeleton joints defined in $\mathbf{J}$ to identify the regions boundaries.
 
+Let the axilla location be the point $p = (p^x, p^y, p^z)$ and 
+$j_{nw}$, $j_{pl}$, 
+$j_{lh} \in \mathbf{J}$ be the natural waist, pelvis and left hip joints, 
+respectively.
+
 Recall that mesh $\mathcal{M}$ has $N$ vertices. Let the set of vertices be 
-$\mathcal{V}$ and $j^y_i$ the y-coordinate of vertex $j_i$, we can segment the 
+$\mathcal{V}$ and $v^y_i$ the y-coordinate of vertex $v_i$, we can 
+segment the 
 mesh in chest, waist and pelvic regions 
 $\mathcal{CR}, \mathcal{WR}, \mathcal{PR}$, respectively
 
-\begin{align}
-\mathcal{CR} = \mathcal{BL}(j), \, j \in \{j_t, j_t+m, \cdots, j_b\}
+\begin{align}\label{eq:cr}
+\mathcal{CR} = \big(v^y_i \, | \, p^y > v^y_i \geq j^y_{nw} \big)
 \end{align}
 
-\begin{align}
-\mathcal{WR} = \mathcal{BL}(j), \, j \in \{j_t, j_t+m, \cdots, j_b\}
+\begin{align}\label{eq:wr}
+\mathcal{WR} = \big(v^y_i \, | \, j^y_{nw} > v^y_i \geq j_{pl}\big)
 \end{align}
 
-\begin{align}
-\mathcal{PR} = \mathcal{BL}(j), \, j \in \{j_t, j_t+m, \cdots, j_b\}
+\begin{align}\label{eq:pr}
+\mathcal{PR} = \big(v^y_i \, | \, j_{pl} > v^y_i \geq j_{lh}\big)
 \end{align}
-
-
-
-
-
-
 
 \subsubsection{Axilla recognition}\label{subsec:armpit_recog}
 As mentioned above, we would like to measure the chest circumference below the 
 armpit, also known as axilla. This raises the question whether we can recognize 
-the axilla based on 
-the mesh signature. We could then establish the location index as lower bound 
-for the search of chest location. There is consensus regarding the axilla 
-definition as the area of the human body underneath the shoulder joint 
-(\cite{MeSH.axilla}, \cite{FMA.axilla}, \cite{TA.axilla}). Therefore, we can 
-use the shoulder joint as a hint to locate the axilla and establish a lower 
-bound for the chest region. We then can combine this idea with the defintion 
-used in the garment industry, namely the maximum horizontal girth under the 
-armpits (axillae) (rh).
-Let us consider the left shoulder joint on in our skeleton model $J_{ls}$. We 
-cast a ray in direction $d$ outside the mesh. Since the joint $J_{ls}$ lies 
-inside the mesh, the ray intersects its surface at point $p_{axilla}$ (see 
+the axilla. What we want is a point in the mesh at the proper location under 
+the arms. One point suffices because we require only a reference along the 
+y-axis to define the chest region according to equation \ref{eq:cr}. Therefore, 
+we focus on the left shoulder joint $j_{ls} \in \mathbf{J}$. Since the axilla 
+is related to 
+the shoulder joint, we can cast a ray in direction $d$ outside the mesh. The 
+joint $j_{ls}$ lies inside the mesh thus the ray intersects its surface at 
+point $p$ (see 
 figure x).
-With this construction we can define the chest region $\mathcal{CR}$ as the 
-region where the slice index is bigger that the index of a slice with 
-y-coordinate is equal or greater than the axilla $y$-coordinate 
-$y_{p_{axilla}}$.
 
-\begin{align}
-\mathcal{CR} = \mathcal{BL}(j), \, j \in \{j_t, j_t+m, \cdots, j_b\}
-\end{align}
-
-Similarly, the waist region is
-
-\begin{align}
-\mathcal{WR} = \mathcal{BL}(j), \, j \in \{j_t, j_t+m, \cdots, j_b\}
-\end{align}
-
-Finally, the pelvic region is
-
-\begin{align}
-\mathcal{PR} = \mathcal{BL}(j), \, j \in \{j_t, j_t+m, \cdots, j_b\}
-\end{align}
+Once we have a segmented mesh, we search the dimensions within 
+these regions. The body dimensions we want to calculate are 
+geodesic on the mesh. Next subsection discuss how.
 
 \subsection{Human Body Mesh Signature}\label{subsec:hbm_signature}
 Intuitively, we would like to measure the chest circumference bellow the arms 
-at the widest part of the torso and the waist circumference at the 
-narrowest part after the chest but above the hips. This intuition is compliant 
-with prior body dimensions standardized definition, for example the European 
-standard EN 13402-1. Similarly, the pelvis 
+at the \textit{widest} part of the torso and the waist circumference at the 
+\textit{narrowest} part after the chest but above the hips. This intuition is 
+compliant 
+with prior body dimensions standardized definition, for example, the European 
+standard EN 13402-1 \cite{en13402-1}. Similarly, the pelvis 
 circumference is measured often around the widest part of hips and 
 buttocks. We 
 can formalize this intuition by considering the cross-sectional length of the 
 2D intersection curves\cite{book.compu.topo} along the y-axis. Moreover, we 
 can 
 use a plane $\boldsymbol{\pi_j}$ parallel (with normal $\vec{n}_{||}$) to the 
-floor to intersect the mesh at a point $j \in 
+floor to intersect the mesh at a point $q \in 
 \mathbb{R}$ along the y-axis. Since $\mathcal{M}$ is triangulated, the boundary 
 of this 
 intersection is a collection of segments $s_i$. Therefore, we can 
 determine the intersection boundary length as
 \begin{equation}
-\mathcal{BL}(\mathcal{M}, \vec{n}_{||}, j) = \sum_{i = 
+\mathcal{BL}(\mathcal{M}, \vec{n}_{||}, q) = \sum_{i = 
 	1}^{i = N}s_i
 \end{equation}
 
@@ -425,25 +408,25 @@ set of disconnected curves has non-zero length (rf?).
 
 Next, we assemble the mesh slide length vector $\vec{\mathcal{L}}$. Starting 
 from the 
-top $j_t$ of the bounding box we slice iteratively mesh $\mathcal{M}$ with 
+top $q_t$ of the bounding box we slice iteratively mesh $\mathcal{M}$ with 
 plane 
 $\boldsymbol{\pi_j}$ every $m$-meters until we reach the bounding box bottom 
-$j_b$. Because the mesh $\mathcal{M}$ and the plane normal $\vec{n}_{||}$ 
+$q_b$. Because the mesh $\mathcal{M}$ and the plane normal $\vec{n}_{||}$ 
 remains the same we can drop them from the notation. For every slice at point 
-$j$, we compute $\mathcal{BL}(j)$.
+$q$, we compute $\mathcal{BL}(q)$.
 
 \begin{align}
-\vec{\mathcal{L}}(\mathcal{M}, \vec{n}_{||}, m) = \left[ \mathcal{BL}(j_t), 
-\mathcal{BL}(j_t+m), \cdots, \mathcal{BL}(j_b) \right]
+\vec{\mathcal{L}}(\mathcal{M}, \vec{n}_{||}, m) = \left[ \mathcal{BL}(q_t), 
+\mathcal{BL}(q_t+m), \cdots, \mathcal{BL}(q_b) \right]
 \end{align}
 
 Finally, we can define the human body \textbf{mesh signature} $\mathcal{MS}: 
 \mathbb{Z}^+ \to \mathbb{R}$ that maps every slice index $k \in \{0, 1, \cdots, 
-|\mathcal{L}|-1\}$ to the corresponding boundary length $\mathcal{BL}(j)$ in 
+|\mathcal{L}|-1\}$ to the corresponding boundary length $\mathcal{BL}(q)$ in 
 the mesh slide vector $\vec{\mathcal{L}}$.
 
 \begin{align}\label{eq:mesh_signature}
-\mathcal{MS}(k) = \mathcal{BL}(j)
+\mathcal{MS}(k) = \mathcal{BL}(q)
 \end{align}
 
 Figure \ref{fig:hbm_signature} shows the $\mathcal{MS}$ of two meshes (male 
@@ -521,7 +504,7 @@ defined by equation \ref{eq:mesh_signature} is bounded and not continuous. It
 resembles a rotated silhouette of the human body and exhibits several 
 \textit{extrema}.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
 		\includegraphics[width=\linewidth]{Figure_1.eps}
