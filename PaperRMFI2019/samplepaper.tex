@@ -249,7 +249,7 @@ connected parent. The pose $\vec{\theta}$ is the specification of every bone
 rotation plus an orientation for the root bone.
 
 The SMPL model is also a \textbf{deformable model} 
-\cite{Terzopoulos:1987:EDM:37401.37427}. In order to 
+\cite{Terzopoulos.1987}. In order to 
 synthesize a 
 new human mesh one has to deform the provided template mesh by 
 setting shape parameters $\vec{\beta}$. Pose parameters $\vec{\theta}$ are used 
@@ -313,9 +313,19 @@ right-to-left, inferior-to-superior and posterior-to-anterior, respectively. If
 the mesh has another orientation we can always apply transformations to 
 LSA-align it.
 
+\begin{figure}[t]
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+		\includegraphics[width=\linewidth]{subjects_2_6_calvis_segmented.png}
+	\end{center}
+	\caption{Mesh segmentation in chest (red), waist (green) and pelvic (blue) 
+	regions. We show male (left) and female (right) subjects in frontal and 
+	lateral view.}
+	\label{fig:axilla-recognition}
+\end{figure}
+
 We observe that the chest circumference is usually measure bellow the armpits, 
-also 
-known as axilla, but above the natural waist. Similarly, the pelvis 
+also known as axilla, but above the natural waist. Similarly, the pelvis 
 circumference is measured often around the hips. This observation suggests that 
 we should consider segmenting the mesh in meaningful regions. Moreover, we can 
 use the skeleton when determining the region boundaries. For 
@@ -326,7 +336,7 @@ use the shoulder joint as a hint to locate the axilla and establish a upper
 bound for the chest region. More generally, we can use the 
 skeleton joints defined in $\mathbf{J}$ to identify the regions boundaries.
 
-Let the axilla location be the point $p = (p^x, p^y, p^z)$ and 
+Let the axilla location be the point $p_a = (p^x_a, p^y_a, p^z_a)$ and 
 $j_{nw}$, $j_{pl}$, 
 $j_{lh} \in \mathbf{J}$ be the natural waist, pelvis and left hip joints, 
 respectively.
@@ -338,15 +348,15 @@ mesh in chest, waist and pelvic regions
 $\mathcal{CR}, \mathcal{WR}, \mathcal{PR}$, respectively
 
 \begin{align}\label{eq:cr}
-\mathcal{CR} = \big(v^y_i \, | \, p^y > v^y_i \geq j^y_{nw} \big)
+\mathcal{CR} = \big(v^y_i \, | \, p^y_a > v^y_i \geq j^y_{nw} \big)
 \end{align}
 
 \begin{align}\label{eq:wr}
-\mathcal{WR} = \big(v^y_i \, | \, j^y_{nw} > v^y_i \geq j_{pl}\big)
+\mathcal{WR} = \big(v^y_i \, | \, j^y_{nw} > v^y_i \geq j^y_{pl}\big)
 \end{align}
 
 \begin{align}\label{eq:pr}
-\mathcal{PR} = \big(v^y_i \, | \, j_{pl} > v^y_i \geq j_{lh}\big)
+\mathcal{PR} = \big(v^y_i \, | \, j^y_{pl} > v^y_i \geq j^y_{lh}\big)
 \end{align}
 
 \subsubsection{Axilla recognition}\label{subsec:armpit_recog}
@@ -357,14 +367,36 @@ the arms. One point suffices because we require only a reference along the
 y-axis to define the chest region according to equation \ref{eq:cr}. Therefore, 
 we focus on the left shoulder joint $j_{ls} \in \mathbf{J}$. Since the axilla 
 is related to 
-the shoulder joint, we can cast a ray in direction $d$ outside the mesh. The 
-joint $j_{ls}$ lies inside the mesh thus the ray intersects its surface at 
-point $p$ (see 
-figure x).
+the shoulder joint, we can cast a ray $\boldsymbol{\iota}$ from it in direction 
+to the middle left 
+inferior edge of the bounding box outside the mesh at point
+
+\begin{align}
+p_b = \bigg(v^x_{min}, v^y_{min}, v^z_{min} + 
+\frac{v^z_{max} - v^z_{min}}{2}\bigg).
+\end{align}
+
+Here $v^x_{min}, v^y_{min}, v^z_{min}$ are vertex with minimum $x$,$y$ and $z$ 
+coordinates, respectively. Distance $d(v^z_{max},v^z_{min})$ is the euclidean 
+distance between vertices with maximum and minimum $z$ coordinate (figure x).
 
 Once we have a segmented mesh, we search the dimensions within 
 these regions. The body dimensions we want to calculate are 
 geodesic on the mesh. Next subsection discuss how.
+
+\begin{figure}[H]
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+		\includegraphics[width=\linewidth]{axilla_recognition_final.png}
+	\end{center}
+	\caption{Axilla recognition based on the skeleton joint. We cast a ray from 
+	the left shoulder joint in direction to the middle left 
+		inferior edge of the bounding box (left). The ray intersects the mesh 
+		at point $p_a$ that we consider the axilla center. We plot the 10 
+		nearest vertices to $p_a$ (right). As it can be observed, the axilla is 
+		properly recognized.}
+	\label{fig:axilla-recognition}
+\end{figure}
 
 \subsection{Human Body Mesh Signature}\label{subsec:hbm_signature}
 Intuitively, we would like to measure the chest circumference bellow the arms 
@@ -391,8 +423,9 @@ determine the intersection boundary length as
 
 Note that for cross sections where $\boldsymbol{\pi_j}$ intersects the legs, 
 two 
-disconnected curves will appear. This is not necessarily a problem, because a 
-set of disconnected curves has non-zero length (rf?).
+disconnected curves will appear. This is not a problem, because a 
+set of disconnected curves is, in our case, a collection of segments with 
+non-zero length.
 
 \begin{figure}[t]
 	\begin{center}
