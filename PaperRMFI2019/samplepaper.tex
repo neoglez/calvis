@@ -28,7 +28,7 @@ as ground truth for deep learning}
 \author{Yansel Gonzalez Tejeda\orcidID{0000-0003-1002-3815} \and
 Helmut Mayer\orcidID{1111-2222-3333-4444}}
 %
-\authorrunning{Gonzalez and Mayer}
+\authorrunning{Gonzalez-Tejeda and Mayer}
 % First names are abbreviated in the running head.
 % If there are more than two authors, 'et al.' is used.
 %
@@ -320,8 +320,9 @@ LSA-align it.
 	\end{center}
 	\caption{Mesh segmentation in chest (red), waist (green) and pelvic (blue) 
 	regions. We show male (left) and female (right) subjects in frontal and 
-	lateral view.}
-	\label{fig:axilla-recognition}
+	lateral view. Note how the regions are correctly segmented for different 
+	gender and body shapes.}
+	\label{fig:mesh_segmented}
 \end{figure}
 
 We observe that the chest circumference is usually measure bellow the armpits, 
@@ -359,11 +360,19 @@ $\mathcal{CR}, \mathcal{WR}, \mathcal{PR}$, respectively
 \mathcal{PR} = \big(v^y_i \, | \, j^y_{pl} > v^y_i \geq j^y_{lh}\big)
 \end{align}
 
+Figure \ref{fig:mesh_segmented} shows the result of applying these equations on 
+two meshes. Note how the regions are correctly segmented for different gender 
+and body shapes. For example, the male subject on the left is smaller than the 
+female subject on the right. Additionally, the subjects have very different 
+muscular and fat build.
+
 \subsubsection{Axilla recognition}\label{subsec:armpit_recog}
 As mentioned above, we would like to measure the chest circumference below the 
 armpit, also known as axilla. This raises the question whether we can recognize 
-the axilla. What we want is a point in the mesh at the proper location under 
-the arms. One point suffices because we require only a reference along the 
+the axilla. What we want is a point $p_a$ in the mesh at the proper location 
+under 
+the arms. One point suffices because we require only a reference $p^y_a$ along 
+the 
 y-axis to define the chest region according to equation \ref{eq:cr}. Therefore, 
 we focus on the left shoulder joint $j_{ls} \in \mathbf{J}$. Since the axilla 
 is related to 
@@ -376,9 +385,13 @@ p_b = \bigg(v^x_{min}, v^y_{min}, v^z_{min} +
 \frac{v^z_{max} - v^z_{min}}{2}\bigg).
 \end{align}
 
-Here $v^x_{min}, v^y_{min}, v^z_{min}$ are vertex with minimum $x$,$y$ and $z$ 
-coordinates, respectively. Distance $d(v^z_{max},v^z_{min})$ is the euclidean 
-distance between vertices with maximum and minimum $z$ coordinate (figure x).
+Here $v^x_{min}, v^y_{min}, v^z_{min}$ are vertex minimum $x$,$y$ and $z$ 
+coordinates, respectively; analog is $v^z_{max}$ the maximum vertex $z$ 
+coordinate. The ray 
+$\iota$ is then determined by points $j_{ls}$ (inside the mesh) and $p_b$ 
+(outside the mesh). Therefore, the ray $\iota$ intersects the mesh at one point 
+$p_a$ (Figure \ref{fig:axilla-recognition}), which we consider the axilla 
+center.
 
 Once we have a segmented mesh, we search the dimensions within 
 these regions. The body dimensions we want to calculate are 
@@ -390,7 +403,7 @@ geodesic on the mesh. Next subsection discuss how.
 		\includegraphics[width=\linewidth]{axilla_recognition_final.png}
 	\end{center}
 	\caption{Axilla recognition based on the skeleton joint. We cast a ray from 
-	the left shoulder joint in direction to the middle left 
+	the left shoulder joint $j_{ls}$ in direction to the middle left 
 		inferior edge of the bounding box (left). The ray intersects the mesh 
 		at point $p_a$ that we consider the axilla center. We plot the 10 
 		nearest vertices to $p_a$ (right). As it can be observed, the axilla is 
@@ -399,24 +412,29 @@ geodesic on the mesh. Next subsection discuss how.
 \end{figure}
 
 \subsection{Human Body Mesh Signature}\label{subsec:hbm_signature}
-Intuitively, we would like to measure the chest circumference bellow the arms 
+Intuitively, we would like to measure the chest circumference below the arms 
 at the \textit{widest} part of the torso and the waist circumference at the 
-\textit{narrowest} part after the chest but above the hips. This intuition is 
+\textit{narrowest} part beneath the chest but above the hips. This intuition is 
 compliant 
 with prior body dimensions standardized definition, for example, the European 
 standard EN 13402-1 \cite{en13402-1}. Similarly, the pelvis 
-circumference is measured often around the widest part of hips and 
-buttocks. We 
+circumference is measured often around the \textit{widest} part of hips and 
+buttocks. The general idea is to cast the chest, waist and pelvis circumference 
+estimation problem as an optimization problem. If we are able to establish a 
+function that measures geodesics on the mesh, we can search for its maximum, 
+e.g., chest in the chest region.
+
+We 
 can formalize this intuition by considering the cross-sectional length of the 
 2D intersection curves\cite{book.compu.topo} along the y-axis. Moreover, we 
 can 
 use a plane $\boldsymbol{\pi_j}$ parallel (with normal $\vec{n}_{||}$) to the 
-floor to intersect the mesh at a point $q \in 
+floor to intersect the mesh at point $q_j = (0, q^y_j, 0), \,  q^y_j \in 
 \mathbb{R}$ along the y-axis. Since $\mathcal{M}$ is triangulated, the boundary 
 of this 
 intersection is a collection of segments $s_i$. Therefore, we can 
 determine the intersection boundary length as
-\begin{equation}
+\begin{equation}\label{eq:boundary_length}
 \mathcal{BL}(\mathcal{M}, \vec{n}_{||}, q) = \sum_{i = 
 	1}^{i = N}s_i
 \end{equation}
@@ -427,7 +445,60 @@ disconnected curves will appear. This is not a problem, because a
 set of disconnected curves is, in our case, a collection of segments with 
 non-zero length.
 
-\begin{figure}[t]
+\begin{figure}[h!]
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+		\includegraphics[width=0.5\linewidth]{subject_2_with_cutting_planes_xrays.png}
+	\end{center}
+	\caption{3D mesh iterative slicing. We 
+		can use a plane $\boldsymbol{\pi_j}$ parallel (with normal 
+		$\vec{n}_{||}$) to the 
+		floor to intersect the mesh at point $q_j = (0, q^y_j, 0), \,  q^y_j 
+		\in 
+		\mathbb{R}$ along the y-axis. By varying point $q_j$ (we show here 40), 
+		we can obtain 
+		slices.}
+	\label{fig:subjects_planes_xrays}
+\end{figure}
+
+Starting 
+from the 
+top $q_t$ of the bounding box we slice iteratively mesh $\mathcal{M}$ with 
+plane 
+$\boldsymbol{\pi_j}$ every $m$-meters along the y-axis until we reach the 
+bounding box bottom 
+$q_b$. Figure \ref{fig:subjects_planes_xrays} shows 40 of these 
+slides. Next, we assemble the mesh sliding vector $\vec{\mathcal{L}}$. The 
+elements of 
+this vector are slice point y-coordinates 
+
+\begin{align}\label{eq:mesh_slice_vector}
+\vec{\mathcal{L}}(\mathcal{M}, \vec{n}_{||}, m) = \left[ q_t, q_t+m, \cdots, 
+q_b \right]
+\end{align}
+
+Finally, we apply equation \ref{eq:boundary_length} to every element of 
+$\mathcal{L}$ in equation \ref{eq:mesh_slice_vector}. In other words, for every 
+slice at point 
+$q_j$, we compute $\mathcal{BL}(q_j)$. Here we drop from the notation mesh 
+$\mathcal{M}$ and plane normal $\vec{n}_{||}$ because they remain constant. We 
+then can 
+define the \textbf{human body mesh signature} $\mathcal{MS}: 
+\vec{\mathcal{L}} \to \mathbb{R}$ that maps every slice at point $q_j$ to the 
+corresponding boundary length $\mathcal{BL}(q_j)$.
+
+\begin{align}\label{eq:mesh_signature_short}
+\mathcal{MS}(\vec{\mathcal{L}}) = [\mathcal{BL}(\mathcal{L}_1), 
+\mathcal{BL}(\mathcal{L}_2), \cdots, 
+\mathcal{BL}(\mathcal{L}_{|\vec{\mathcal{L}}|})]
+\end{align}
+
+\begin{align}\label{eq:mesh_signature}
+\mathcal{MS}(\mathcal{M}, \vec{n}_{||}, m) = 
+[\mathcal{BL}(q_t), \mathcal{BL}(q_t+m), \cdots, \mathcal{BL}(q_b)]
+\end{align}
+
+\begin{figure}[H]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
 		\includegraphics[width=\linewidth]{Figure_1.eps}
@@ -439,66 +510,29 @@ non-zero length.
 	\label{fig:hbm_signature}
 \end{figure}
 
-Next, we assemble the mesh slide length vector $\vec{\mathcal{L}}$. Starting 
-from the 
-top $q_t$ of the bounding box we slice iteratively mesh $\mathcal{M}$ with 
-plane 
-$\boldsymbol{\pi_j}$ every $m$-meters until we reach the bounding box bottom 
-$q_b$. Because the mesh $\mathcal{M}$ and the plane normal $\vec{n}_{||}$ 
-remains the same we can drop them from the notation. For every slice at point 
-$q$, we compute $\mathcal{BL}(q)$.
-
-\begin{align}
-\vec{\mathcal{L}}(\mathcal{M}, \vec{n}_{||}, m) = \left[ \mathcal{BL}(q_t), 
-\mathcal{BL}(q_t+m), \cdots, \mathcal{BL}(q_b) \right]
-\end{align}
-
-Finally, we can define the human body \textbf{mesh signature} $\mathcal{MS}: 
-\mathbb{Z}^+ \to \mathbb{R}$ that maps every slice index $k \in \{0, 1, \cdots, 
-|\mathcal{L}|-1\}$ to the corresponding boundary length $\mathcal{BL}(q)$ in 
-the mesh slide vector $\vec{\mathcal{L}}$.
-
-\begin{align}\label{eq:mesh_signature}
-\mathcal{MS}(k) = \mathcal{BL}(q)
-\end{align}
-
 Figure \ref{fig:hbm_signature} shows the $\mathcal{MS}$ of two meshes (male 
 and female) for 
-$m=0,001$ and plane $\boldsymbol{\pi}$ parallel to the floor (with normal $(0, 
+$m=0,001$ and plane parallel to the floor (with normal 
+$\vec{n}_{||} = (0, 
 1,0)$) using the library trimesh \cite{trimesh}. Note that the function as 
 defined by equation \ref{eq:mesh_signature} is bounded and not continuous. It 
 resembles a rotated silhouette of the human body and exhibits several 
 \textit{extrema}.
 
 In general, we expect these \textit{extrema} to be adequate features to 
-calculate the human dimensions. However, there is no consensus in the 
-literature regarding the method to calculate chest, waist and hip 
-circumference. While Yansel et al., 2020 define waist circumference as the 
-blalal. That is why we first establish the regions and the search for local 
-extrema in these regions.
-
-More specifically, we assume that:
+calculate the human dimensions. More specifically, we assume that:
 \begin{enumerate}
-	\item The global maximum $M_g$ represents the length of the largest path 
-	around the arms. From a topographic point of view $M_g$ is the highest peak 
-	of $\mathcal{MS}$. A horizontal line at height proportion $h$ of the peak 
-	intersects 
-	it at two points left $p_l$ and right $p_r$.
-	\item The plane $\boldsymbol{\pi}$ intersects the mesh $\mathcal{M}$ at the 
-	point where the left hip is located defining a path. The length of this 
-	path is $P_{lh}$.	
-	\item The local maximum $M_{pc}$ with largest value other than $M_g$ 
-	immediately prior to $P_{lh}$ represents the pelvis circumference.	
-	\item The local minimum $M_{wc}$ posterior to $p_r$ but prior to $M_{pc}$ 
-	represents waist circumference.
-	\item The local maximum $M_{cc}$ posterior to $p_r$ but prior to $M_{wc}$ 
-	represents 
-	chest circumference. If this local maximum does not exist we set $M_{cc}$ 
-	to the value of the path $\mathcal{BL}(j_{cc})$ with largest value in the 
-	interval $(p_l; M_{wc})$.
+	\item The chest circumference $cc$ is the local maximum within the chest 
+	region.
+	\item The waist circumference $wc$ (not to be confused with the natural 
+	waist line) is the minimum within the waist region.	
+	\item The pelvis circumference $pc$ is the maximum within the pelvis region.
 \end{enumerate}
 
-\subsection{Recognition by interval search}\label{subsec:interval_search}
+\begin{align}\label{eq:cc}
+cc &= \mathcal{L}_i \in \mathcal{CR}\\
+\mathcal{MS}(\mathcal{M}, \vec{n}_{||}, m) &= \mathcal{L}_i \in \mathcal{CR}
+\end{align}
 
 %------------------------------------------------------------------------
 \section{Experiments and Results}
