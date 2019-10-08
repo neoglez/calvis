@@ -203,6 +203,11 @@ Tsoli et al., 2014 \cite{Tsoli.2014} extract what they calls anthropometric or
 tailored measurements introduced model-based anthropometry (what is that)(which 
 method?)(Results?) (Open Problems).
 
+In general, previous work has concentrated on human body shapes not deviating 
+much from the mean. In contrast, we move beyond by exploring 3D meshes 
+reflecting human figures characteristics such as bulky, slim, small and 
+tall subjects.
+
 \subsection{Human Shape Estimation with Artificial Neural Networks}
 A huge amount of research has been conducted in recent years to address the 
 problem of 3D/2D human shape estimation using ANNs. Experimented with different 
@@ -374,24 +379,30 @@ under
 the arms. One point suffices because we require only a reference $p^y_a$ along 
 the 
 y-axis to define the chest region according to equation \ref{eq:cr}. Therefore, 
-we focus on the left shoulder joint $j_{ls} \in \mathbf{J}$. Since the axilla 
+we focus on the right shoulder joint $j_{rs} \in \mathbf{J}$. Since the axilla 
 is related to 
 the shoulder joint, we can cast a ray $\boldsymbol{\iota}$ from it in direction 
 to the middle left 
 inferior edge of the bounding box outside the mesh at point
 
 \begin{align}
-p_b = \bigg(v^x_{min}, v^y_{min}, v^z_{min} + 
+p_c = \bigg(v^x_{min}, v^y_{min}, v^z_{min} + 
 \frac{v^z_{max} - v^z_{min}}{2}\bigg).
 \end{align}
 
 Here $v^x_{min}, v^y_{min}, v^z_{min}$ are vertex minimum $x$,$y$ and $z$ 
 coordinates, respectively; analog is $v^z_{max}$ the maximum vertex $z$ 
 coordinate. The ray 
-$\iota$ is then determined by points $j_{ls}$ (inside the mesh) and $p_b$ 
+$\iota$ is then determined by points $j_{rs}$ (inside the mesh) and $p_b$ 
 (outside the mesh). Therefore, the ray $\iota$ intersects the mesh at one point 
-$p_a$ (Figure \ref{fig:axilla-recognition}), which we consider the axilla 
-center.
+$p_c$ (Figure \ref{fig:axilla-recognition}), which we consider the axilla 
+center. Furthermore, we can consider an strategy to increase the method 
+robustness against the large variability of the human body. Since our method 
+relies on one point to establish the chest upper bound, we identify the 10 
+nearest neighbors in the set of vertices $\mathcal{V}$ to $p_c$ and define 
+$p_a$ to be the 
+vertex with the smallest 
+y coordinate of the neighbors.  
 
 Once we have a segmented mesh, we search the dimensions within 
 these regions. The body dimensions we want to calculate are 
@@ -470,7 +481,7 @@ bounding box bottom
 $q_b$. Figure \ref{fig:subjects_planes_xrays} shows 40 of these 
 slides. Next, we assemble the mesh sliding vector $\vec{\mathcal{L}}$. The 
 elements of 
-this vector are slice point y-coordinates 
+this vector are slice points
 
 \begin{align}\label{eq:mesh_slice_vector}
 \vec{\mathcal{L}}(\mathcal{M}, \vec{n}_{||}, m) = \left[ q_t, q_t+m, \cdots, 
@@ -571,59 +582,41 @@ defined by equation \ref{eq:mesh_signature} is bounded and not continuous. It
 resembles a rotated silhouette of the human body and exhibits several 
 \textit{extrema}.
 
-\begin{figure}[h!]
-	\begin{center}
-		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-		\includegraphics[width=\linewidth]{Figure_1.eps}
-	\end{center}
-	\caption{Human Body Mesh Signature for male and female meshes. The 
-		function resembles a rotated silhouette of the human body and exhibits 
-		several \textit{extrema}. See section 
-		\ref{subsec:mesh_signature_extrema} for discussion of these extrema.}
-	\label{fig:qualitative_eval}
-\end{figure}
-
-\subsection{Learning convergence evaluation}\label{subsec:learn_conv}
+\subsection{Calvis-Net and Learning Convergence 
+Evaluation}\label{subsec:learn_conv}
 This experiment demonstrates the plausibility of using calvis to obtain data 
 that can be used as a ground truth for machine learning (in general) and 
 specifically as supervising signal for ANN.
 
-Figure \ref{fig:calvis_net} shows the our prototypical ANN calvis net where the 
-input is a synthetic image from a 3D mesh and the output are the three body 
+Figure \ref{fig:calvis_net} shows our prototypical CNN Calvis-Net where the 
+input is a synthetic image from a 3D mesh and the output are three body 
 dimensions.
 
-Figure \ref{fig:learn_conv} shows that after epoch number 5 the estimation 
+Figure \ref{fig:learning_curve} shows that after epoch number 5 the estimation 
 error decreases and the learning converges.
-
 \begin{figure}[H]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-		\includegraphics[width=\linewidth]{Figure_1.eps}
+		\includegraphics[width=\linewidth]{Calvis-Net.png}
 	\end{center}
-	\caption{Human Body Mesh Signature for male and female meshes. The 
-		function resembles a rotated silhouette of the human body and exhibits 
-		several \textit{extrema}. See section 
-		\ref{subsec:mesh_signature_extrema} for discussion of these extrema.}
-	\label{fig:qualitative_eval}
+	\caption{Calvis-Net.}
+	\label{fig:calvis_net}
 \end{figure}
 
 \begin{figure}[H]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-		\includegraphics[width=\linewidth]{Figure_1.eps}
+		\includegraphics[width=\linewidth]{Training_val_loss.png}
 	\end{center}
-	\caption{Human Body Mesh Signature for male and female meshes. The 
-		function resembles a rotated silhouette of the human body and exhibits 
-		several \textit{extrema}. See section 
-		\ref{subsec:mesh_signature_extrema} for discussion of these extrema.}
-	\label{fig:qualitative_eval}
+	\caption{Learning convergence evaluation.}
+	\label{fig:learning_curve}
 \end{figure}
 
 
 %------------------------------------------------------------------------
 \section{Conclusion}
 
-The method can be optimized. Further research must be conducted.
+The method operates optimally.
 %
 % ---- Bibliography ----
 %
