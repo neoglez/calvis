@@ -18,7 +18,7 @@
 
 \begin{document}
 %
-\title{CALVIS: Chest, wAist and peLVIS circumference from 3D human body meshes	
+\title{CALVIS: chest, waist and pelvis circumference from 3D human body meshes	
 as ground truth for deep learning}
 %
 \titlerunning{Chest, wAist and peLVIS circumference from 3D human body meshes}
@@ -39,24 +39,24 @@ Helmut Mayer\orcidID{1111-2222-3333-4444}}
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-In this paper we present CALVIS, a method to calculate chest, waist and 
-pelvis circumference from 3D human body meshes. Our motivation is to use 
-this data as ground truth for learning with convolutional neural networks 
+In this paper we present CALVIS, a method to calculate \textbf{C}hest, 
+w\textbf{A}ist and pe\textbf{LVIS} circumference from 3D human body meshes. Our 
+motivation is to use 
+this data as ground truth for training convolutional neural networks 
 (CNN). Previous work had used the large scale CAESAR dataset or determined 
-$\textit{manually}$ these anthropometrical measurements directly from a person 
+these anthropometrical measurements $\textit{manually}$ from a person 
 or human 3D body meshes. 
 Unfortunately, acquiring these data is a cost and 
-time consuming endeavor. In contrast our method can be used on 
-3D meshes automatically. We conduct two experiments. 
-In the first experiment we synthesize 10 human body meshes. Then we apply 
+time consuming endeavor. In contrast, our method can be used on 
+3D meshes automatically. We synthesize eight human body meshes and 
+apply 
 CALVIS to calculate chest, waist and pelvis circumference. We evaluate the 
-results qualitatively. We observe that the measurements can indeed be used 
-to estimate the shape of a person. The second experiment asses the 
-plausibility of our approach where we use the calculated human dimensions as 
-a ground truth to train a small CNN. After 
+results qualitatively and observe that the measurements can indeed be used 
+to estimate the shape of a person. We then asses the 
+plausibility of our approach by exploiting the calculated human dimensions as 
+ground truth to train a small CNN. After
 having trained the network with 
-our data, we demonstrate that learning converges, achieving $x$ percent 
-prediction error.
+our data, we achieve competitive prediction error.
 Furthermore, we make the implementation of CALVIS publicly available to 
 advance the field.
 
@@ -93,7 +93,7 @@ pelvis circumference.
 
 The problem of estimating chest, waist and 
 pelvis circumference having only an image of a person is a challenging problem 
-and involve recognizing the corresponding location of these dimension in the 
+and involve recognizing the corresponding location of these dimensions in the 
 body and estimating their circumference. Additionally, the setting is an  
 under-constrained  (or inverse) problem. Information 
 gets lost when a camera is 
@@ -216,7 +216,7 @@ An state-of-the-art method is \cite{kanazawaHMR18} where they estimate human
 shape and pose.
 
 %------------------------------------------------------------------------
-\section{Approach}\label{sec:approach}
+\section{Chest, Waist and Pelvis Measurements}\label{sec:approach}
 While human body 
 meshes are traditionally acquired by specialized 3D scanners, we use a 
 generative model to synthesize them, which we briefly review in 
@@ -242,7 +242,7 @@ The SMPL model is at its top level a \textbf{skinned articulated
 model}, i.e., 
 consists of a 
 surface mesh $\mathcal{M}$ that mimics the skin and a corresponding skeleton 
-$\mathbf{J}$. The mesh $\mathcal{M} \in \mathbb{R}^{3N}$, which is a boundary 
+$\mathbf{J}$. The mesh $\mathcal{M}$, which is a boundary 
 representation stores 
 both the body geometry (vertex position) and topology (how the vertices are 
 connected). The skeleton $\mathbf{J}$ is defined by its joints location in 3D 
@@ -283,7 +283,8 @@ respectively linear functions $B_s(\vec{\beta}; \mathcal{S}):
 \mathbb{R}^{3N}$ that are used to deform $\mathbf{\bar{T}}$; and the function 
 $\mathcal{J}: \mathbb{R}^{|\vec{\beta}|} \to \mathbb{R}^{3K}$ predicts skeleton 
 rest joint locations from vertices in the rest 
-pose. A new mesh $\mathcal{M}_{new}$ can be then generated
+pose. A new mesh $\mathcal{M}_{new}$ can be then generated using the SMPL model 
+$M$
 
 \begin{equation}\label{eq:gen_mesh}
 \mathcal{M}_{new} = M(\vec{\beta}, \vec{\theta}, \Phi).
@@ -311,11 +312,11 @@ Segmentation}\label{subsec:three_regions}
 Let us consider a human body mesh $\mathcal{M}$. Our method requires that 
 $\mathcal{M}$ is standing with arms raised 
 parallel to the 
-ground at shoulder height at a $90^\circ$ angle (SMPL normalized pose
+ground at shoulder height at a $90^\circ$ angle (SMPL zero pose
 $\vec{\theta}^*$). Additionally, we assume that the mesh 
 has LSA orientation, e.g., x, y and z axis are positively directed from 
 right-to-left, inferior-to-superior and posterior-to-anterior, respectively. If 
-the mesh has another orientation we can always apply transformations to 
+the mesh has another orientation we can always apply rigid transformations to 
 LSA-align it.
 
 \begin{figure}[t]
@@ -330,7 +331,7 @@ LSA-align it.
 	\label{fig:mesh_segmented}
 \end{figure}
 
-We observe that the chest circumference is usually measure bellow the armpits, 
+We observe that the chest circumference is usually measure below the armpits, 
 also known as axilla, but above the natural waist. Similarly, the pelvis 
 circumference is measured often around the hips. This observation suggests that 
 we should consider segmenting the mesh in meaningful regions. Moreover, we can 
@@ -344,8 +345,10 @@ skeleton joints defined in $\mathbf{J}$ to identify the regions boundaries.
 
 Let the axilla location be the point $p_a = (p^x_a, p^y_a, p^z_a)$ and 
 $j_{nw}$, $j_{pl}$, 
-$j_{lh} \in \mathbf{J}$ be the natural waist, pelvis and left hip joints, 
-respectively.
+$j_{rh} \in \mathbf{J}$ be the natural waist, pelvis and right hip joints 
+(joints with identifier $\mathtt{Spine1}$, $\mathtt{Pelvis}$, $\mathtt{R\_Hip}$ 
+in 
+$\mathbf{J}$), respectively.
 
 Recall that mesh $\mathcal{M}$ has $N$ vertices. Let the set of vertices be 
 $\mathcal{V}$ and $v^y_i$ the y-coordinate of vertex $v_i$, we can 
@@ -362,7 +365,7 @@ $\mathcal{CR}, \mathcal{WR}, \mathcal{PR}$, respectively
 \end{align}
 
 \begin{align}\label{eq:pr}
-\mathcal{PR} = \big(v^y_i \, | \, j^y_{pl} > v^y_i \geq j^y_{lh}\big)
+\mathcal{PR} = \big(v^y_i \, | \, j^y_{pl} > v^y_i \geq j^y_{rh}\big)
 \end{align}
 
 Figure \ref{fig:mesh_segmented} shows the result of applying these equations on 
@@ -373,7 +376,7 @@ muscular and fat build.
 
 \subsubsection{Axilla recognition}\label{subsec:armpit_recog}
 As mentioned above, we would like to measure the chest circumference below the 
-armpit, also known as axilla. This raises the question whether we can recognize 
+armpit, also known as axilla. This raises the question how we can recognize 
 the axilla. What we want is a point $p_a$ in the mesh at the proper location 
 under 
 the arms. One point suffices because we require only a reference $p^y_a$ along 
@@ -385,9 +388,24 @@ the shoulder joint, we can cast a ray $\boldsymbol{\iota}$ from it in direction
 to the middle left 
 inferior edge of the bounding box outside the mesh at point
 
+\begin{figure}[t]
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+		\includegraphics[width=\linewidth]{axilla_recognition_final.png}
+	\end{center}
+	\caption{Axilla recognition based on the skeleton joint. We cast a ray from 
+		the left shoulder joint $j_{ls}$ in direction to the middle left 
+		inferior edge of the bounding box (left). The ray intersects the mesh 
+		at point $p_c$ (red) that we consider the axilla center. We plot the 10 
+		nearest vertices to $p_c$ (right). Point $p_a$ is the nearest vertex 
+		with smallest y coordinate. As it can be observed, the axilla is 
+		properly recognized.}
+	\label{fig:axilla-recognition}
+\end{figure}
+
 \begin{align}
 p_c = \bigg(v^x_{min}, v^y_{min}, v^z_{min} + 
-\frac{v^z_{max} - v^z_{min}}{2}\bigg).
+\frac{|v^z_{max} - v^z_{min}|}{2}\bigg).
 \end{align}
 
 Here $v^x_{min}, v^y_{min}, v^z_{min}$ are vertex minimum $x$,$y$ and $z$ 
@@ -397,30 +415,15 @@ $\iota$ is then determined by points $j_{rs}$ (inside the mesh) and $p_b$
 (outside the mesh). Therefore, the ray $\iota$ intersects the mesh at one point 
 $p_c$ (Figure \ref{fig:axilla-recognition}), which we consider the axilla 
 center. Furthermore, we can consider an strategy to increase the method 
-robustness against the large variability of the human body. Since our method 
+robustness against the large variability of the human body. Since this approach 
 relies on one point to establish the chest upper bound, we identify the 10 
 nearest neighbors in the set of vertices $\mathcal{V}$ to $p_c$ and define 
-$p_a$ to be the 
-vertex with the smallest 
-y coordinate of the neighbors.  
+$p_a$ to be the vertex with the smallest y coordinate of the neighbors.  
 
 Once we have a segmented mesh, we search the dimensions within 
 these regions. The body dimensions we want to calculate are 
 geodesic on the mesh. Next subsection discuss how.
 
-\begin{figure}[H]
-	\begin{center}
-		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-		\includegraphics[width=\linewidth]{axilla_recognition_final.png}
-	\end{center}
-	\caption{Axilla recognition based on the skeleton joint. We cast a ray from 
-	the left shoulder joint $j_{ls}$ in direction to the middle left 
-		inferior edge of the bounding box (left). The ray intersects the mesh 
-		at point $p_a$ that we consider the axilla center. We plot the 10 
-		nearest vertices to $p_a$ (right). As it can be observed, the axilla is 
-		properly recognized.}
-	\label{fig:axilla-recognition}
-\end{figure}
 
 \subsection{Human Body Mesh Signature}\label{subsec:hbm_signature}
 Intuitively, we would like to measure the chest circumference below the arms 
@@ -431,32 +434,13 @@ with prior body dimensions standardized definition, for example, the European
 standard EN 13402-1 \cite{en13402-1}. Similarly, the pelvis 
 circumference is measured often around the \textit{widest} part of hips and 
 buttocks. The general idea is to cast the chest, waist and pelvis circumference 
-estimation problem as an optimization problem. If we are able to establish a 
-function that measures geodesics on the mesh, we can search for its maximum, 
+estimation problem as a constrained optimization problem. If we are able to 
+establish a 
+function that measures meaningful geodesics on the mesh, we can search for its 
+maximum, 
 e.g., chest in the chest region.
 
-We 
-can formalize this intuition by considering the cross-sectional length of the 
-2D intersection curves\cite{book.compu.topo} along the y-axis. Moreover, we 
-can 
-use a plane $\boldsymbol{\pi_j}$ parallel (with normal $\vec{n}_{||}$) to the 
-floor to intersect the mesh at point $q_j = (0, q^y_j, 0), \,  q^y_j \in 
-\mathbb{R}$ along the y-axis. Since $\mathcal{M}$ is triangulated, the boundary 
-of this 
-intersection is a collection of segments $s_i$. Therefore, we can 
-determine the intersection boundary length as
-\begin{equation}\label{eq:boundary_length}
-\mathcal{BL}(\mathcal{M}, \vec{n}_{||}, q) = \sum_{i = 
-	1}^{i = N}s_i
-\end{equation}
-
-Note that for cross sections where $\boldsymbol{\pi_j}$ intersects the legs, 
-two 
-disconnected curves will appear. This is not a problem, because a 
-set of disconnected curves is, in our case, a collection of segments with 
-non-zero length.
-
-\begin{figure}[h!]
+\begin{figure}[H]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
 		\includegraphics[width=0.5\linewidth]{subject_2_with_cutting_planes_xrays.png}
@@ -472,6 +456,29 @@ non-zero length.
 	\label{fig:subjects_planes_xrays}
 \end{figure}
 
+We 
+can formalize this intuition by considering the cross-sectional length of the 
+2D intersection curves\cite{yansel} along the y-axis. Moreover, we 
+can 
+use a plane $\boldsymbol{\pi_j}$ parallel (with normal $\vec{n}_{||}$) to the 
+floor to intersect the mesh at point $q_j = (0, q^y_j, 0), \,  q^y_j \in 
+\mathbb{R}$ along the y-axis. Since $\mathcal{M}$ is triangulated, the boundary 
+of this 
+intersection is a polygonal curve consisting in segments with length $s_i$. 
+Therefore, we 
+can 
+determine the intersection boundary length as
+\begin{equation}\label{eq:boundary_length}
+\mathcal{BL}(\mathcal{M}, \vec{n}_{||}, q) = \sum_{i = 
+	1}^{i = N}s_i
+\end{equation}
+
+Note that for cross sections where $\boldsymbol{\pi_j}$ intersects the legs, 
+two 
+disconnected curves will appear. This is not a problem, because a 
+set of disconnected curves is, in our case, a collection of segments with 
+non-zero length.
+
 Starting 
 from the 
 top $q_t$ of the bounding box we slice iteratively mesh $\mathcal{M}$ with 
@@ -479,19 +486,21 @@ plane
 $\boldsymbol{\pi_j}$ every $m$-meters along the y-axis until we reach the 
 bounding box bottom 
 $q_b$. Figure \ref{fig:subjects_planes_xrays} shows 40 of these 
-slides. Next, we assemble the mesh sliding vector $\vec{\mathcal{L}}$. The 
+slices. Next, we assemble the mesh slicing vector $\vec{\mathcal{L}}$. The 
 elements of 
 this vector are slice points
 
 \begin{align}\label{eq:mesh_slice_vector}
-\vec{\mathcal{L}}(\mathcal{M}, \vec{n}_{||}, m) = \left[ q_t, q_t+m, \cdots, 
+\vec{\mathcal{L}}(\mathcal{M}, \vec{n}_{||}, m) = \left[ q_t, q_t-m, q_t-2 
+m,\cdots, 
 q_b \right]
 \end{align}
 
-Finally, we apply equation \ref{eq:boundary_length} to every element of 
+Finally, we apply equation \ref{eq:boundary_length} to every slice defined in
 $\mathcal{L}$ in equation \ref{eq:mesh_slice_vector}. In other words, for every 
 slice at point 
-$q_j$, we compute $\mathcal{BL}(q_j)$. Here we drop from the notation mesh 
+$q_j$, we compute intersection boundary length $\mathcal{BL}(q_j)$. Here we 
+drop from the notation mesh 
 $\mathcal{M}$ and plane normal $\vec{n}_{||}$ because they remain constant. We 
 then can 
 define the \textbf{human body mesh signature} $\mathcal{MS}: 
@@ -506,10 +515,10 @@ corresponding boundary length $\mathcal{BL}(q_j)$.
 
 \begin{align}\label{eq:mesh_signature}
 \mathcal{MS}(\mathcal{M}, \vec{n}_{||}, m) = 
-[\mathcal{BL}(q_t), \mathcal{BL}(q_t+m), \cdots, \mathcal{BL}(q_b)]
+[\mathcal{BL}(q_t), \mathcal{BL}(q_t-m), \cdots, \mathcal{BL}(q_b)]
 \end{align}
 
-\begin{figure}[H]
+\begin{figure}[t]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
 		\includegraphics[width=\linewidth]{Figure_1.eps}
@@ -536,13 +545,27 @@ calculate the human dimensions. More specifically, we assume that:
 	\item The chest circumference $cc$ is the local maximum within the chest 
 	region.
 	\item The waist circumference $wc$ (not to be confused with the natural 
-	waist line) is the minimum within the waist region.	
+	waist line based on the joint, see subsection \ref{subsec:three_regions}) 
+	is the minimum within the waist region.	
 	\item The pelvis circumference $pc$ is the maximum within the pelvis region.
 \end{enumerate}
 
 \begin{align}\label{eq:cc}
-cc &= \mathcal{L}_i \in \mathcal{CR}\\
-\mathcal{MS}(\mathcal{M}, \vec{n}_{||}, m) &= \mathcal{L}_i \in \mathcal{CR}
+cc = \underset{\mathcal{BL}(q_j)}{\text{arg max}}\ \mathcal{MS} \quad 
+\text{subject 
+to} \quad p^y_a > q_j \geq j^y_{nw}
+\end{align}
+
+\begin{align}\label{eq:wc}
+wc = \underset{\mathcal{BL}(q_j)}{\text{arg min}}\ \mathcal{MS} \quad 
+\text{subject 
+	to} \quad j^y_{nw} > v^y_i \geq j^y_{pl}
+\end{align}
+
+\begin{align}\label{eq:pc}
+pc = \underset{\mathcal{BL}(q_j)}{\text{arg max}}\ \mathcal{MS} \quad 
+\text{subject 
+	to} \quad j^y_{pl} > v^y_i \geq j^y_{rh}
 \end{align}
 
 %------------------------------------------------------------------------
@@ -563,37 +586,52 @@ dimensions to an artificial neural network. After having trained the network
 with our data, we show that learning converges.
 
 \subsection{Qualitative evaluation}\label{subsec:qualitative_eval}
-Here we evaluate our method qualitatively with method one and method two.
+Here we evaluate our method qualitatively.
 \begin{figure}[H]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-		\includegraphics[width=\linewidth]{subject_6_with_cutting_planes_on_joints.eps}
+		\includegraphics[width=\linewidth]{experiment_1_results.png}
 	\end{center}
-	\caption{Qualitative evaluation for male and female meshes. We evaluate our 
-	method with method one and method two.}
+	\caption{Qualitative evaluation for male and female meshes.}
 	\label{fig:qualitative_eval}
 \end{figure}
 
-Figure \ref{fig:qualitative_eval} shows the $\mathcal{MS}$ of two meshes (male 
-and female) for 
-$m=0,001$ and plane $\boldsymbol{\pi}$ parallel to the floor (with normal $(0, 
-1,0)$) using the library trimesh \cite{trimesh}. Note that the function as 
-defined by equation \ref{eq:mesh_signature} is bounded and not continuous. It 
-resembles a rotated silhouette of the human body and exhibits several 
-\textit{extrema}.
+Figure \ref{fig:qualitative_eval} shows the calculated dimensions on eight 
+subjects, male subjects no. 1-4 and female subjects no. 5-8. The black paths 
+represent chest, waist and pelvis circumference (from 
+top to bottom) as defined by equations \ref{eq:cc}-\ref{eq:pc}, respectively. 
+We slightly rotate the meshes and add transparency for visualization purposes. 
+Note that our method is able to estimate automatically the human body 
+dimensions for all 
+subjects. One particularity can be observed regarding the chest circumference: 
+while for all male and female subjects except for subject no. 7 the chest 
+circumference is 
+estimated above the breast, for subject no.7 the chest circumference is 
+estimated around the breast.
 
-\subsection{Calvis-Net and Learning Convergence 
-Evaluation}\label{subsec:learn_conv}
-This experiment demonstrates the plausibility of using calvis to obtain data 
+\subsection{Learning with Calvis-Net}\label{subsec:learning}
+This experiment demonstrates the plausibility of employing calvis to obtain 
+data 
 that can be used as a ground truth for machine learning (in general) and 
-specifically as supervising signal for ANN.
+specifically as supervising signal for CNN.
 
-Figure \ref{fig:calvis_net} shows our prototypical CNN Calvis-Net where the 
-input is a synthetic image from a 3D mesh and the output are three body 
-dimensions.
+\subsubsection{Experimental setup} We annotate the CMU dataset with calvis. The 
+automatic annotation process took approximately $1\,h\, 47\, min$ in an 
+enhanced 
+modern personal computer.
 
-Figure \ref{fig:learning_curve} shows that after epoch number 5 the estimation 
-error decreases and the learning converges.
+\subsubsection{Calvis-CMU Dataset} We synthesize x images of every 
+person using the package Blender. To increase the realism of these images we 
+adopt a yansel lighting model. This makes sense because it resembles the way 
+how a person is standing in a room when she/he goes to the tailor for her/his 
+body dimensions to be taken.
+
+\subsubsection{Synthetic images as input} We synthesize x images of every 
+person using the package Blender. To increase the realism of these images we 
+adopt a yansel lighting model. This makes sense because it resembles the way 
+how a person is standing in a room when she/he goes to the tailor for her/his 
+body dimensions to be taken.
+
 \begin{figure}[H]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
@@ -602,6 +640,15 @@ error decreases and the learning converges.
 	\caption{Calvis-Net.}
 	\label{fig:calvis_net}
 \end{figure}
+
+Figure \ref{fig:calvis_net} shows our prototypical CNN Calvis-Net where the 
+input is a synthetic image from a 3D mesh and the output are three body 
+dimensions.
+
+Figure \ref{fig:learning_curve} shows that after epoch number 5 the estimation 
+error decreases and the learning converges.
+
+We achieve mean absolute validation error of 0.061698 m plus +-.
 
 \begin{figure}[H]
 	\begin{center}
