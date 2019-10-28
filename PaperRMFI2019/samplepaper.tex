@@ -13,7 +13,7 @@
 %
 % If you use the hyperref package, please uncomment the following line
 % to display URLs in blue roman font according to Springer's eBook style:
-\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+\usepackage[pagebackref=true,breaklinks=true,colorlinks,bookmarks=false]{hyperref}
 \renewcommand\UrlFont{\color{blue}\rmfamily}
 
 \begin{document}
@@ -53,10 +53,10 @@ apply
 CALVIS to calculate chest, waist and pelvis circumference. We evaluate the 
 results qualitatively and observe that the measurements can indeed be used 
 to estimate the shape of a person. We then asses the 
-plausibility of our approach by exploiting the calculated human dimensions as 
-ground truth to train a small CNN. After
+plausibility of our approach by generating
+ground truth with CALVIS to train a small CNN. After
 having trained the network with 
-our data, we achieve competitive prediction error.
+our data, we achieve competitive validation error.
 Furthermore, we make the implementation of CALVIS publicly available to 
 advance the field.
 
@@ -72,7 +72,7 @@ Predicting 3D human body measurements from images is crucial in several
 scenarios 
 like virtual try-on, animating, ergonomics, computational forensics and 
 even health and mortality estimation. Researches had 
-named this 
+named these
 measurements body intuitive controls \cite{Allen.2003}, biometric 
 measurements \cite{Sigal.2008}, body dimensions 
 \cite{DBLP:conf/bmvc/ChenRC11}, (European standard EN 13402), semantical 
@@ -117,103 +117,95 @@ expensive. Therefore, it is important to explore alternative methods where
 human body measurements derived from real data can be obtained for 
 investigation.
 
-3D human body generative models offers such an alternative. We propose to 
-synthesize 3D human body meshes using the SMPL \cite{Loper.2015} generative 
-model. Once we have 
-the 3D meshes we can compute chest, waist and pelvis circumference. The next 
+3D human body generative models offers such an alternative. In the line of previous work, we start by synthesizing 3D human body meshes using the SMPL \cite{Loper.2015} generative 
+model. Unlike other works, once we have 
+the 3D meshes we compute chest, waist and pelvis circumference. The next 
 step after obtaining the 
 measurements is to use a camera model to render
 images. Finally, in possession of this ground truth we can 
-input this images to the learning algorithm and perform inference.
+input these images to the learning algorithm and train with the human body dimensions as supervision signal.
 
 \textbf{Contributions} In summary, our contributions are $1)$ CALVIS: a method 
 capable of automatically outputting chest, waist and pelvis circumference from 
 3D body meshes. $2)$ A prototype deep learning framework (CNN) with synthetic 
-images of 3D human body meshes as input and the human body dimension obtained 
+images of 3D human body meshes as input and the human body dimensions obtained 
 with CALVIS as supervision signal.
 
-\section{Related Work}\label{sec:rel_work}
+\section{Related Work} \label{sec:related_work}
 
-\subsection{Human Body Data synthesis}
-The \cite{Anguelov.2005} SCAPE model opened wide possibilities in the field  
-because it provided the community with a generative model of the human 
-body. However, if (Problem they address) (which method?)(Results?) (Open 
-Problems).
-After some(which, reference here) attempts on improving (say here either 
-quality or spped), Loper et al., 2018 \cite{Loper.2015} developed a generative 
-human body model.(Problem they address) (which method?)(Results?) (Open 
-Problems).
-Pischchulin et al., 2017 \cite{Pishchulin.2017} synthesize data. (Problem they 
-address) (which method?)(Results?) (Open Problems).
-More recently, Joo et al. \cite{Joo.2018} presents a human model with SMPL as a 
-body model and added hand and face. We do not use that more complex model in 
-this paper, that is future work.
-
-\subsection{Human Body Dimensions from 3D models}
-Allen et al., 2003 \cite{Allen.2003} proposed how to relate what they call body 
-intuitive controls, e.g. height, weight, age and sex with PCAs performed on the 
-space X (replace X!) using a linear mapping. Describe more please! (Problems)- 
-make connection to next related work.  
-Sigal et al., 2008 \cite{Sigal.2008} used a generative model (which method?) to 
-estimate what he calls biometric measurements. (Results?) (Open Problems).
-It is obvious that the problem of estimating the shape and pose of a human 
-having only an image it is an under-constrained  (or inverse) problem. 
-\cite{Guan.2013}  argues that (why) this situation can be alleviated by 
-providing the shape model with the capability of keeping the height constant. 
-This is indeed not the case for the original SCAPE model because the height is 
-a semantical parameter and semantical parameters are “spread” over all bases. 
-The arguments goes like this: SCAPE is a good human shape model. At its core 
-this model relates triangles deformations to semantical parameters. One of the 
-first problem one encounters when trying to model the human shape is the model 
-size: because one needs a lot (~6000) triangles to sculpt a human body, you 
-have the same amount of dimensions. Then one applies dimensionality reduction 
-techniques, in this case PCA, having at the end around 20 components. These 
-components do not describe intuitively (are not expressed explicit in the model 
-) human shape characteristics (e.g., height, chest circumference or waist), 
-nevertheless they are the bases of a vector space containing human shapes. Next 
-\cite{Guan.2013} goes an argue that by “rotating” one (or more) of these bases 
-we can vary the other bases  without being forced to vary the height.
-
-Wuhrer and Shu, 2013 \cite{Wuhrer.2013} proposed a method to 
-create/estimate/generate 3D human shapes from traditional anthropometric 
-measurements. They learned a correlation between the 3D bodies meshes and 1D 
-measurements. Then, when predicting a new shape, they find an initial solution 
-based on the learned correlation (yansel WHICH correlation) and refine this 
-solution by a two-step non linear optimization. They build up on two 
-assumptions, namely, that the initial estimation should be in the plausible 
-space of human shapes and second, that, in order to generalized, the model has 
-to be refined without using this prior knowledge. While the first step use 
-information from the learned shape prior, the second step introduce a 
-smoothness constraint on the objective function. Like this work we use a set of 
-traditional anthropometric measurements, unlike them we calculate 1D 
-measurements from 3D human bodies to use them as ground truth for later 
-inference. Their approach is able to capture variation outside the shape space 
-spanned by the training data, in other words, the approach generalized well.
-At the same time, Boisvert et al., 2013 \cite{Boisvert.2013} estimate human 
-shape from measurements (what is that)(which method?)(Results?) (Open 
-Problems). These two works can not be directly quantitatively compared because 
-they use different set of measurements.
-Moreover, Yang et al., 2014 \cite{Yang.2014} developed a method to map 
-principal component to what they call semantical parameters. These semantical 
-parameter are indeed anthropometric measurements, which justify their naming: 
-in contrast to anthropometric meaningless principal components, their model is 
-capable of manipulating concepts like chest and waist 
-circumference.(Method?)(Results?).   
-Tsoli et al., 2014 \cite{Tsoli.2014} extract what they calls anthropometric or 
-tailored measurements introduced model-based anthropometry (what is that)(which 
-method?)(Results?) (Open Problems).
+%-------------------------------------------------------------------------
+\subsection{Human Dimensions Estimation from Images.}
+Using metrology techniques \cite{ams.2008.BenAbdelkaderY08} and mixture of experts model \cite{Sigal.2008} human body dimensions like height, arm span and even weight had been estimated from images. Chest and waist size had been considered as well \cite{Guan.2013}. These investigations used human dimensions for validation (ground truth) that were directly recovered from individuals. In contrary, we calculate them  
+consistently from 3D meshes.
+Another significant research direction studies shape as (non necessarily meaningful) parameters of some model. For example \cite{Bogo:ECCV:2016} claim describing the first method 
+to 
+estimate pose and shape from a single image, while \cite{DBLP:Lassner2017} estimates shape from 91 keypoints using decision 
+forests. Shape is understood as the 
+parameters of the SMPL model but not human dimensions.
 
 In general, previous work has concentrated on human body shapes not deviating 
 much from the mean. In contrast, we move beyond by exploring 3D meshes 
 reflecting human figures characteristics such as bulky, slim, small and 
 tall subjects.
 
+\subsection{Human Body Data Synthesis.}
+The SCAPE model\cite{Anguelov.2005} opened wide possibilities in the field. It 
+provided the scientific community with a method to build realistic 3D human 
+body meshes of different shapes in different poses. In order to synthesize a 
+human body mesh a template body must be deformed. The model exhibits, however, an important limitation, namely the last 
+step on the pipeline is an expensive optimization problem. Other researchers had used variation of the SCAPE model (S-SCAPE \cite{Pishchulin.2017}) to synthesize human bodies but focused on people detection.
+
+After some attempts on improving the human models quality, for example, to make 
+more 
+easily capturing the correlation between body shape and pose 
+\cite{HaslerSSRS09}, or to better understand body dimensions (SPRING model 
+\cite{Yang.2014}), Loper et al., 2015 \cite{Loper.2015} developed the SMPL generative 
+human body model. In this work we synthesize 3D human meshes using this 
+model. We will briefly describe the model in subsection \ref{subsec:smpl_model}.
+
+Our approach to synthesize images from 3D meshes has been strongly influence by the recent publication of the large scale dataset SURREAL \cite{varol17_surreal}. This work uses the SMPL model 
+to generate images 
+from humans with random backgrounds. However, no human body dimensions are computed of estimated.
+
+More recently, a human model with added hands and face had been presented \cite{Joo.2018}. We do not use this more complex model 
+because the human dimensions we estimate do not require that level 
+of detail.
+
+\subsection{Human Body Dimensions from 3D Models.}
+Although extensive research has been carried out on human shape estimation, 
+methods to consistently define shape based on 3D mesh 
+anthropometric measurements have been little explored. Only a handful of researchers 
+have 
+reported calculating 1D body dimensions from 3D triangular meshes to use them as ground truth for training and validation in a variety of inference processes.
+ 
+Early research performed feature analysis on what they 
+call body intuitive controls, e.g. height, weight, age and gender \cite{Allen.2003}  but they do not 
+calculate them. Instead they use the CAESAR demographic data. Recording human dimensions beyond height like body fat and the more abstract ``muscles" are described by \cite{HaslerSSRS09}.
+
+Pertinent to our investigation is also the inverse problem: generating 3D human 
+shapes from traditional anthropometric measurements \cite{Wuhrer.2013}. Like this work we use a set of 
+anthropometric measurements that we call dimensions, unlike them we calculate 
+1D measurements from 3D human bodies to use them as ground truth for later 
+inference.
+
+Strongly related to our work are methods that calculate waist and 
+chest circumference by slicing the mesh on a fixed plane and compute the convex hull of the contour \cite{Guan.2013} or path length from identified (marked) 
+vertices on the 3D mesh \cite{Boisvert.2013,Dibra.2016a,Dibra.2016b}. However, is not clear how they define the human body dimensions.
+
+In contrast, we do not 
+calculate the dimensions from fix vertices on the template 
+mesh. Instead, we 
+take a more anthropometric approach and use domain knowledge to calculate these 
+measurements.
+
 \subsection{Human Shape Estimation with Artificial Neural Networks}
 A huge amount of research has been conducted in recent years to address the 
-problem of 3D/2D human shape estimation using ANNs. Experimented with different 
-architectures.
-An state-of-the-art method is \cite{kanazawaHMR18} where they estimate human 
-shape and pose.
+problem of 3D/2D human shape estimation using ANNs. A state-of-the-art method 
+is \cite{kanazawaHMR18} where they estimate human 
+shape and pose. While these ANN's output are human body models parameters 
+(i.e., $\beta$s in \cite{Dibra.2016a} and \cite{varol18_bodynet}) our network 
+is 
+capable to output human dimensions directly.
 
 %------------------------------------------------------------------------
 \section{Chest, Waist and Pelvis Measurements}\label{sec:approach}
@@ -458,7 +450,7 @@ e.g., chest in the chest region.
 
 We 
 can formalize this intuition by considering the cross-sectional length of the 
-2D intersection curves\cite{yansel} along the y-axis. Moreover, we 
+2D intersection curves along the y-axis. Moreover, we 
 can 
 use a plane $\boldsymbol{\pi_j}$ parallel (with normal $\vec{n}_{||}$) to the 
 floor to intersect the mesh at point $q_j = (0, q^y_j, 0), \,  q^y_j \in 
@@ -525,8 +517,7 @@ corresponding boundary length $\mathcal{BL}(q_j)$.
 	\end{center}
 	\caption{Human Body Mesh Signature for male and female meshes. The 
 		function resembles a rotated silhouette of the human body and exhibits 
-		several \textit{extrema}. See section 
-		\ref{subsec:mesh_signature_extrema} for discussion of these extrema.}
+		several \textit{extrema}.}
 	\label{fig:hbm_signature}
 \end{figure}
 
@@ -577,13 +568,12 @@ SURREAL \cite{varol17_surreal}.
 The meshes reflect human figures characteristics such as bulky, slim, small and 
 tall subjects. Then we apply CALVIS to calculate chest, waist and pelvis 
 circumference. Since we do not have ground truth, we evaluate the results 
-qualitatively by comparing our method 
-with \cite{Dibra.2016b}.
+qualitatively.
 The second 
 experiment serves to asses the plausibility of our approach to use the 
 synthetic data for deep learning. We input the calculated human 
 dimensions to an artificial neural network. After having trained the network 
-with our data, we show that learning converges.
+with our data, we show that the network is able to learn the task.
 
 \subsection{Qualitative evaluation}\label{subsec:qualitative_eval}
 Here we evaluate our method qualitatively.
@@ -610,12 +600,12 @@ estimated above the breast, for subject no.7 the chest circumference is
 estimated around the breast.
 
 \subsection{Learning with Calvis-Net}\label{subsec:learning}
-This experiment demonstrates the plausibility of employing calvis to obtain 
+This experiment demonstrates the plausibility of employing CALVIS to obtain 
 data 
 that can be used as a ground truth for machine learning (in general) and 
 specifically as supervising signal for CNN.
 
-\subsubsection{Experimental setup} We annotate the CMU dataset with calvis. The 
+\subsubsection{Experimental setup} We annotate the CMU dataset with CALVIS. The 
 automatic annotation process took approximately $1\,h\, 47\, min$ in an 
 enhanced 
 modern personal computer.
@@ -662,8 +652,12 @@ We achieve mean absolute validation error of 0.061698 m plus +-.
 
 %------------------------------------------------------------------------
 \section{Conclusion}
-
-The method operates optimally.
+In this paper we presented CALVIS, a method to calculate chest, waist and pelvis circumference from 3D human meshes. 
+We demonstrate that our approach can be used to train a CNN by imputing synthetic images of humans and using the measurements calculated with CALVIS as supervision signal.
+Furthermore, we contribute with a prototype CNN CALVIS-NET. Our experiments show that the CNN is able to learn how to perform this task, achieving mean absolute validation error of 0.061698 m plus +-.
+The code 
+and data use 
+in this paper will be made publicly available for researchers.
 %
 % ---- Bibliography ----
 %
