@@ -200,9 +200,9 @@ measurements.
 
 \subsection{Human Shape Estimation with Artificial Neural Networks}
 A huge amount of research has been conducted in recent years to address the 
-problem of 3D/2D human shape estimation using ANNs. A state-of-the-art method 
+problem of 3D/2D human shape estimation using CNNs. A state-of-the-art method 
 is \cite{kanazawaHMR18} where they estimate human 
-shape and pose. While these ANN's output are human body models parameters 
+shape and pose. While these CNN's output are human body models parameters 
 (i.e., $\beta$s in \cite{Dibra.2016a} and \cite{varol18_bodynet}) our network 
 is 
 capable to output human dimensions directly.
@@ -383,20 +383,20 @@ inferior edge of the bounding box outside the mesh at point
 \begin{figure}[t]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-		\includegraphics[width=\linewidth]{axilla_recognition_final.png}
+		\includegraphics[width=\linewidth]{axilla_recognition_80_NN.png}
 	\end{center}
 	\caption{Axilla recognition based on the skeleton joint. We cast a ray from 
-		the left shoulder joint $j_{ls}$ in direction to the middle left 
+		the right shoulder joint $j_{rs}$ (red point inside the mesh) in direction to the middle left 
 		inferior edge of the bounding box (left). The ray intersects the mesh 
-		at point $p_c$ (red) that we consider the axilla center. We plot the 10 
-		nearest vertices to $p_c$ (right). Point $p_a$ is the nearest vertex 
+		at point $p_c$ (red) that we consider the axilla center. We plot the 80 
+		nearest vertices to $p_c$ (right). Among these vertices point $p_a$ is the vertex 
 		with smallest y coordinate. As it can be observed, the axilla is 
 		properly recognized.}
 	\label{fig:axilla-recognition}
 \end{figure}
 
 \begin{align}
-p_c = \bigg(v^x_{min}, v^y_{min}, v^z_{min} + 
+p_b = \bigg(v^x_{min}, v^y_{min}, v^z_{min} + 
 \frac{|v^z_{max} - v^z_{min}|}{2}\bigg).
 \end{align}
 
@@ -408,7 +408,7 @@ $\iota$ is then determined by points $j_{rs}$ (inside the mesh) and $p_b$
 $p_c$ (Figure \ref{fig:axilla-recognition}), which we consider the axilla 
 center. Furthermore, we can consider an strategy to increase the method 
 robustness against the large variability of the human body. Since this approach 
-relies on one point to establish the chest upper bound, we identify the 10 
+relies on one point to establish the chest upper bound, we identify the 80 
 nearest neighbors in the set of vertices $\mathcal{V}$ to $p_c$ and define 
 $p_a$ to be the vertex with the smallest y coordinate of the neighbors.  
 
@@ -465,12 +465,6 @@ determine the intersection boundary length as
 	1}^{i = N}s_i
 \end{equation}
 
-Note that for cross sections where $\boldsymbol{\pi_j}$ intersects the legs, 
-two 
-disconnected curves will appear. This is not a problem, because a 
-set of disconnected curves is, in our case, a collection of segments with 
-non-zero length.
-
 Starting 
 from the 
 top $q_t$ of the bounding box we slice iteratively mesh $\mathcal{M}$ with 
@@ -513,7 +507,7 @@ corresponding boundary length $\mathcal{BL}(q_j)$.
 \begin{figure}[t]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-		\includegraphics[width=\linewidth]{Figure_1.eps}
+		\includegraphics[width=\linewidth]{mesh_signature.png}
 	\end{center}
 	\caption{Human Body Mesh Signature for male and female meshes. The 
 		function resembles a rotated silhouette of the human body and exhibits 

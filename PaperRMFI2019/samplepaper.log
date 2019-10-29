@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.3.6)  28 OCT 2019 19:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.3.6)  29 OCT 2019 15:42
 entering extended mode
 **./samplepaper.tex
 (samplepaper.tex
@@ -441,13 +441,13 @@ ure be-low the armpits,
  []
 
 [5]
-<axilla_recognition_final.png, id=171, 464.937pt x 277.838pt>
-File: axilla_recognition_final.png Graphic file (type png)
-<use axilla_recognition_final.png>
-Package pdftex.def Info: axilla_recognition_final.png  used on input line 386.
-(pdftex.def)             Requested size: 347.12354pt x 207.4453pt.
+<axilla_recognition_80_NN.png, id=171, 549.55313pt x 291.33844pt>
+File: axilla_recognition_80_NN.png Graphic file (type png)
+<use axilla_recognition_80_NN.png>
+Package pdftex.def Info: axilla_recognition_80_NN.png  used on input line 386.
+(pdftex.def)             Requested size: 347.12354pt x 184.02873pt.
  [6 <./subjects_2_6_calvis_segmented.png (PNG copy)>] [7 <./axilla_recognition_
-final.png>]
+80_NN.png>]
 <subject_2_with_cutting_planes_xrays.png, id=198, 463.95555pt x 533.89462pt>
 File: subject_2_with_cutting_planes_xrays.png Graphic file (type png)
 <use subject_2_with_cutting_planes_xrays.png>
@@ -455,46 +455,31 @@ Package pdftex.def Info: subject_2_with_cutting_planes_xrays.png  used on input
  line 438.
 (pdftex.def)             Requested size: 173.56177pt x 199.72119pt.
  [8 <./subject_2_with_cutting_planes_xrays.png (PNG copy)>]
-Package epstopdf Info: Source file: <Figure_1.eps>
-(epstopdf)                    date: 2019-10-27 10:14:51
-(epstopdf)                    size: 38268 bytes
-(epstopdf)             Output file: <Figure_1-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-10-27 17:24:00
-(epstopdf)                    size: 19348 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figure_1-eps-converted-to.p
-df Figure_1.eps>
-(epstopdf)             \includegraphics on input line 516.
-Package epstopdf Info: Output file is already uptodate.
+<mesh_signature.png, id=214, 462.528pt x 344.0052pt>
+File: mesh_signature.png Graphic file (type png)
+<use mesh_signature.png>
+Package pdftex.def Info: mesh_signature.png  used on input line 510.
+(pdftex.def)             Requested size: 347.12354pt x 258.18697pt.
 
-
-pdfTeX warning: pdflatex.exe (file ./Figure_1-eps-converted-to.pdf): PDF inclus
-ion: found PDF version <1.7>, but at most version <1.5> allowed
-<Figure_1-eps-converted-to.pdf, id=214, 462.72874pt x 346.29375pt>
-File: Figure_1-eps-converted-to.pdf Graphic file (type pdf)
-<use Figure_1-eps-converted-to.pdf>
-Package pdftex.def Info: Figure_1-eps-converted-to.pdf  used on input line 516.
-
-(pdftex.def)             Requested size: 347.12354pt x 259.77779pt.
 [9]
 <experiment_1_results.png, id=238, 970.73778pt x 635.976pt>
 File: experiment_1_results.png Graphic file (type png)
 <use experiment_1_results.png>
-Package pdftex.def Info: experiment_1_results.png  used on input line 583.
+Package pdftex.def Info: experiment_1_results.png  used on input line 577.
 (pdftex.def)             Requested size: 347.12354pt x 227.41792pt.
 
-Underfull \vbox (badness 1596) has occurred while \output is active []
+Underfull \vbox (badness 1783) has occurred while \output is active []
 
- [10 <./Figure_1-eps-converted-to.pdf>] [11 <./experiment_1_results.png (PNG co
-py)>]
-<Calvis-Net.png, id=299, 1976.13281pt x 1002.74625pt>
+ [10 <./mesh_signature.png>] [11 <./experiment_1_results.png (PNG copy)>]
+<Calvis-Net.png, id=257, 1976.13281pt x 1002.74625pt>
 File: Calvis-Net.png Graphic file (type png)
 <use Calvis-Net.png>
-Package pdftex.def Info: Calvis-Net.png  used on input line 628.
+Package pdftex.def Info: Calvis-Net.png  used on input line 622.
 (pdftex.def)             Requested size: 347.12354pt x 176.12584pt.
-<Training_val_loss.png, id=302, 462.528pt x 346.896pt>
+<Training_val_loss.png, id=260, 462.528pt x 346.896pt>
 File: Training_val_loss.png Graphic file (type png)
 <use Training_val_loss.png>
-Package pdftex.def Info: Training_val_loss.png  used on input line 646.
+Package pdftex.def Info: Training_val_loss.png  used on input line 640.
 (pdftex.def)             Requested size: 347.12354pt x 260.35661pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -552,24 +537,24 @@ onal Con-fer-
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 671.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 665.
  [15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 671.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 665.
  (samplepaper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 671.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 671.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 665.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 665.
 Package rerunfilecheck Info: File `samplepaper.brf' has not changed.
 (rerunfilecheck)             Checksum: 95F815963625119F2F64710A4D3E14C1;2048.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 671.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 665.
  ) 
 Here is how much of TeX's memory you used:
- 6854 strings out of 492946
- 98330 string characters out of 3135528
- 202873 words of memory out of 3000000
+ 6853 strings out of 492946
+ 98264 string characters out of 3135528
+ 202915 words of memory out of 3000000
  10565 multiletter control sequences out of 15000+200000
  16482 words of font info for 62 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 32i,13n,27p,582b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 32i,13n,27p,624b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Program Files/MiKTe
@@ -592,9 +577,9 @@ fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/P
 rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKT
 eX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on samplepaper.pdf (15 pages, 1168082 bytes).
+Output written on samplepaper.pdf (15 pages, 1298344 bytes).
 PDF statistics:
- 494 PDF objects out of 1000 (max. 8388607)
+ 452 PDF objects out of 1000 (max. 8388607)
  91 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
