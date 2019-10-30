@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.3.6)  29 OCT 2019 15:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.3.6)  30 OCT 2019 11:11
 entering extended mode
 **./samplepaper.tex
 (samplepaper.tex
@@ -465,93 +465,83 @@ Package pdftex.def Info: mesh_signature.png  used on input line 510.
 <experiment_1_results.png, id=238, 970.73778pt x 635.976pt>
 File: experiment_1_results.png Graphic file (type png)
 <use experiment_1_results.png>
-Package pdftex.def Info: experiment_1_results.png  used on input line 577.
+Package pdftex.def Info: experiment_1_results.png  used on input line 575.
 (pdftex.def)             Requested size: 347.12354pt x 227.41792pt.
-
-Underfull \vbox (badness 1783) has occurred while \output is active []
-
- [10 <./mesh_signature.png>] [11 <./experiment_1_results.png (PNG copy)>]
-<Calvis-Net.png, id=257, 1976.13281pt x 1002.74625pt>
+ [10 <./mesh_signature.png>]
+<Calvis-Net.png, id=249, 1976.13281pt x 1002.74625pt>
 File: Calvis-Net.png Graphic file (type png)
 <use Calvis-Net.png>
-Package pdftex.def Info: Calvis-Net.png  used on input line 622.
+Package pdftex.def Info: Calvis-Net.png  used on input line 606.
 (pdftex.def)             Requested size: 347.12354pt x 176.12584pt.
-<Training_val_loss.png, id=260, 462.528pt x 346.896pt>
-File: Training_val_loss.png Graphic file (type png)
-<use Training_val_loss.png>
-Package pdftex.def Info: Training_val_loss.png  used on input line 640.
-(pdftex.def)             Requested size: 347.12354pt x 260.35661pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [12 <./Calvis-Net.png>] (samplepaper.bbl (samplepaper.brf)
+ [11 <./experiment_1_results.png (PNG copy)>]
+(samplepaper.bbl (samplepaper.brf)
 \tf@brf=\write3
 \openout3 = `samplepaper.brf'.
 
- [13 <./Training_val_loss.png>]
+ [12 <./Calvis-Net.png>]
 Underfull \hbox (badness 1072) in paragraph at lines 70--70
 []\OT1/cmr/m/n/9 Hasler, N., Stoll, C., Sunkel, M., Rosen-hahn, B., Sei-del, H.
 : A sta-tis-ti-cal
  []
 
-[14]
-Overfull \hbox (56.0481pt too wide) in paragraph at lines 114--114
+[13]
+Overfull \hbox (56.0481pt too wide) in paragraph at lines 119--119
 \OT1/cmr/m/n/9 3271-[]combined-[]discriminative-[]and-[]generative-[]articulate
 d-[]pose-[]and-[]non-[]rigid-[]shape-[]estimation .
  []
 
 
-Underfull \hbox (badness 1755) in paragraph at lines 123--123
+Underfull \hbox (badness 1755) in paragraph at lines 128--128
 []\OT1/cmr/m/n/9 Terzopoulos, D., Platt, J., Barr, A., Fleis-cher, K.: Elas-ti-
 cally de-formable
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 123--123
+Underfull \hbox (badness 10000) in paragraph at lines 128--128
 \OT1/cmr/m/n/9 mod-els. SIG-GRAPH Com-put. Graph. \OT1/cmr/bx/n/9 21\OT1/cmr/m/
 n/9 (4), 205--214 (Aug 1987).
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--147
+Underfull \hbox (badness 10000) in paragraph at lines 152--152
 []\OT1/cmr/m/n/9 Wuhrer, S., Shu, C., Xi, P.: Landmark-free pos-ture in-vari-an
 t hu-
  []
 
 
-Underfull \hbox (badness 4441) in paragraph at lines 147--147
+Underfull \hbox (badness 4441) in paragraph at lines 152--152
 \OT1/cmr/m/n/9 man shape cor-re-spon-dence. The Vi-sual Com-puter \OT1/cmr/bx/n
 /9 27\OT1/cmr/m/n/9 (9), 843--852 (Sep
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--147
+Underfull \hbox (badness 10000) in paragraph at lines 152--152
 \OT1/cmr/m/n/9 2011). [][]https://doi.org/10.1007/s00371-011-0557-z[][], [][][]
 $https : / / doi . org / 10 . 1007 /
  []
 
 
-Underfull \hbox (badness 3158) in paragraph at lines 153--153
+Underfull \hbox (badness 3158) in paragraph at lines 158--158
 \OT1/cmr/m/n/9 met-ric re-shap-ing of hu-man body mod-els. In: 2nd In-ter-na-ti
 onal Con-fer-
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 665.
- [15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 665.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 635.
+ [14]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 635.
  (samplepaper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 665.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 665.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 635.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 635.
 Package rerunfilecheck Info: File `samplepaper.brf' has not changed.
-(rerunfilecheck)             Checksum: 95F815963625119F2F64710A4D3E14C1;2048.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 665.
+(rerunfilecheck)             Checksum: 108BD318AEF03AAB51CB6BAF192765F2;2104.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 635.
  ) 
 Here is how much of TeX's memory you used:
- 6853 strings out of 492946
- 98264 string characters out of 3135528
- 202915 words of memory out of 3000000
- 10565 multiletter control sequences out of 15000+200000
+ 6848 strings out of 492946
+ 98197 string characters out of 3135528
+ 202901 words of memory out of 3000000
+ 10564 multiletter control sequences out of 15000+200000
  16482 words of font info for 62 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  32i,13n,27p,624b,468s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -577,9 +567,9 @@ fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/P
 rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKT
 eX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on samplepaper.pdf (15 pages, 1298344 bytes).
+Output written on samplepaper.pdf (14 pages, 1246309 bytes).
 PDF statistics:
- 452 PDF objects out of 1000 (max. 8388607)
- 91 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 445 PDF objects out of 1000 (max. 8388607)
+ 88 named destinations out of 1000 (max. 500000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

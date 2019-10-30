@@ -95,6 +95,11 @@ Loper, M., Mahmood, N., Romero, J., Pons-Moll, G., Black, M.J.: Smpl: A skinned
 Panero, J.: Human dimension \& interior space : a source book of design
   reference standards. Whitney Library of Design, New York (1979)
 
+\bibitem{paszke2017automatic}
+Paszke, A., Gross, S., Chintala, S., Chanan, G., Yang, E., DeVito, Z., Lin, Z.,
+  Desmaison, A., Antiga, L., Lerer, A.: Automatic differentiation in {PyTorch}.
+  In: NIPS Autodiff Workshop (2017)
+
 \bibitem{Pishchulin.2017}
 Pishchulin, L., Wuhrer, S., Helten, T., Theobalt, C., Schiele, B.: Building
   statistical shape spaces for 3d human modeling. Pattern Recognition
