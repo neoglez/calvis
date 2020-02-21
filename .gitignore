@@ -3,3 +3,6 @@
 *.blg
 *.log
 *.brf
+*.gz
+*.pyc
+code/__pycache__
