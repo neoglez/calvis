@@ -6,3 +6,4 @@
 *.gz
 *.pyc
 code/__pycache__
+.ipynb_checkpoints/

@@ -21,20 +21,20 @@
 \title{CALVIS: chest, waist and pelvis circumference from 3D human body meshes	
 as ground truth for deep learning}
 %
-\titlerunning{Chest, wAist and peLVIS circumference from 3D human body meshes}
+\titlerunning{Chest, waist and pelvis circumference from 3D human body meshes}
 % If the paper title is too long for the running head, you can set
 % an abbreviated paper title here
 %
-\author{Yansel Gonzalez Tejeda\orcidID{0000-0003-1002-3815} \and
-Helmut Mayer\orcidID{1111-2222-3333-4444}}
+\author{Yansel Gonzalez-Tejeda\orcidID{0000-0003-1002-3815} \and
+	Helmut Mayer\orcidID{0000-0002-2428-0962}}
 %
 \authorrunning{Gonzalez-Tejeda and Mayer}
 % First names are abbreviated in the running head.
 % If there are more than two authors, 'et al.' is used.
 %
 \institute{Paris Lodron University of 
-	Salzburg, Kapitelgasse 4-65020 Salzburg, Austria
-\url{https://www.uni-salzburg.at}}
+	Salzburg, Kapitelgasse 4-6, 5020 Salzburg, Austria
+	\url{https://www.uni-salzburg.at}}
 %
 \maketitle              % typeset the header of the contribution
 %
@@ -109,7 +109,7 @@ This survey was extraordinarily large and resource intensive: around nine
 thousand people from Europe and the USA where scanned, it was conducted over 
 more than five years and costed more than six million dollars.
 
-In the past decade a noticeably amount of researchers have employed this 
+In the past decade a noticeable number of researchers have employed this 
 dataset to investigate human shape estimation. Because the measurement 
 acquiring process is resource intensive and requires large amount of human and 
 material resources, this type of studies are rare and the data they offer is 
@@ -117,7 +117,9 @@ expensive. Therefore, it is important to explore alternative methods where
 human body measurements derived from real data can be obtained for 
 investigation.
 
-3D human body generative models offers such an alternative. In the line of previous work, we start by synthesizing 3D human body meshes using the SMPL \cite{Loper.2015} generative 
+3D human body generative models offers such an alternative. In the line of 
+previous work, we start by synthesizing 3D human body meshes using the Skinned 
+Multi-Person Linear (SMPL) \cite{Loper.2015} generative 
 model. Unlike other works, once we have 
 the 3D meshes we compute chest, waist and pelvis circumference. The next 
 step after obtaining the 
@@ -135,7 +137,12 @@ with CALVIS as supervision signal.
 
 %-------------------------------------------------------------------------
 \subsection{Human Dimensions Estimation from Images.}
-Using metrology techniques \cite{ams.2008.BenAbdelkaderY08} and mixture of experts model \cite{Sigal.2008} human body dimensions like height, arm span and even weight had been estimated from images. Chest and waist size had been considered as well \cite{Guan.2013}. These investigations used human dimensions for validation (ground truth) that were directly recovered from individuals. In contrary, we calculate them  
+Using metrology techniques \cite{ams.2008.BenAbdelkaderY08} and mixture of 
+experts model \cite{Sigal.2008} human body dimensions like height, arm span and 
+even weight had been estimated from images. Chest and waist size had been 
+considered as well \cite{Guan.2013}. These investigations used human dimensions 
+for validation (ground truth) that were directly recovered from individuals. In 
+contrast, we calculate them  
 consistently from 3D meshes.
 Another significant research direction studies shape as (non necessarily meaningful) parameters of some model. For example \cite{Bogo:ECCV:2016} claim describing the first method 
 to 
@@ -149,7 +156,9 @@ reflecting human figures characteristics such as bulky, slim, small and
 tall subjects.
 
 \subsection{Human Body Data Synthesis.}
-The SCAPE model\cite{Anguelov.2005} opened wide possibilities in the field. It 
+The Shape Completion and Animation of People (SCAPE) model\cite{Anguelov.2005} 
+opened wide possibilities in the field of 
+human shape estimation. It 
 provided the scientific community with a method to build realistic 3D human 
 body meshes of different shapes in different poses. In order to synthesize a 
 human body mesh a template body must be deformed. The model exhibits, however, an important limitation, namely the last 
@@ -158,17 +167,21 @@ step on the pipeline is an expensive optimization problem. Other researchers had
 After some attempts on improving the human models quality, for example, to make 
 more 
 easily capturing the correlation between body shape and pose 
-\cite{HaslerSSRS09}, or to better understand body dimensions (SPRING model 
+\cite{HaslerSSRS09}, or to better understand body dimensions (Semantic 
+Parametric Reshaping of Human Body Models - SPRING model 
 \cite{Yang.2014}), Loper et al., 2015 \cite{Loper.2015} developed the SMPL generative 
 human body model. In this work we synthesize 3D human meshes using this 
 model. We will briefly describe the model in subsection \ref{subsec:smpl_model}.
 
-Our approach to synthesize images from 3D meshes has been strongly influence by the recent publication of the large scale dataset SURREAL \cite{varol17_surreal}. This work uses the SMPL model 
+Our approach to synthesize images from 3D meshes has been influenced 
+by the recent publication of the large scale dataset SURREAL 
+\cite{varol17_surreal}. This work uses the SMPL model 
 to generate images 
-from humans with random backgrounds. However, no human body dimensions are computed of estimated.
+from humans with random backgrounds. However, no human body dimensions are 
+computed or estimated.
 
 More recently, a human model with added hands and face had been presented \cite{Joo.2018}. We do not use this more complex model 
-because the human dimensions we estimate do not require that level 
+because the human dimensions we estimate do not require such level 
 of detail.
 
 \subsection{Human Body Dimensions from 3D Models.}
@@ -223,8 +236,9 @@ we identify the intended dimensions employing a human body mesh signature
 defined in subsection \ref{subsec:hbm_signature}.
 
 \subsection{SMPL Generative Model of the Human Body}\label{subsec:smpl_model}
-In this work we synthesize 3D human meshes using the SMPL
-model \cite{Loper.2015}. The generative nature of our approach establishes this 
+In this work we synthesize 3D human meshes using the Skinned Multi-Person 
+Linear (SMPL) model \cite{Loper.2015}. The generative nature of our approach 
+establishes this 
 model as starting point (and not the 3D mesh). Nevertheless, our method is 
 flexible enough to begin the pipeline with a 3D mesh. In that case, an SMPL 
 model can be fitted to the volumetric data, using the method described by 
@@ -413,8 +427,8 @@ nearest neighbors in the set of vertices $\mathcal{V}$ to $p_c$ and define
 $p_a$ to be the vertex with the smallest y coordinate of the neighbors.  
 
 Once we have a segmented mesh, we search the dimensions within 
-these regions. The body dimensions we want to calculate are 
-geodesic on the mesh. Next subsection discuss how.
+these regions. Next subsection discuss how to calculate geodesic on the mesh to 
+establish a search strategy.
 
 
 \subsection{Human Body Mesh Signature}\label{subsec:hbm_signature}
@@ -583,16 +597,20 @@ subjects, male subjects no. 1-4 and female subjects no. 5-8. The black paths
 represent chest, waist and pelvis circumference (from 
 top to bottom) as defined by equations \ref{eq:cc}-\ref{eq:pc}, respectively. 
 We slightly rotate the meshes and add transparency for visualization purposes. 
-Note that our method is able to estimate automatically the human body 
+Note that our method is able to calculate automatically the human body 
 dimensions for all 
-subjects. The dimensions are indeed estimated at locations where domain experts regularly identify them.
+subjects. The dimensions are indeed calculated at locations where domain 
+experts regularly identify them.
 
 \subsection{Learning with Calvis-Net}\label{subsec:learning}
 This experiment demonstrates the plausibility of employing CALVIS to obtain 
 data 
 that can be used as a ground truth for machine learning (in general) and particularly as supervising signal for CNN.
 
-\subsubsection{Experimental setup.} First, we assemble our Calvis-CMU Dataset. We synthesize 3400 grayscale images (1700 of each gender) of human body meshes generated with parameters from the CMU dataset using Blender. To increase the realism of these images we 
+\subsubsection{Experimental setup.} First, we assemble our Calvis-CMU Dataset. 
+Using Blender we render 3400 grayscale images (1700 of each gender) of 
+human body meshes generated with parameters from the CMU dataset. To increase 
+the realism of these images we 
 adopt an indoor lighting model with one light source and white background. This makes sense because it resembles the way 
 how a person is standing in a room when she attends to the tailor for her 
 body dimensions to be taken.
@@ -609,24 +627,26 @@ enhanced modern personal computer.
 	\label{fig:calvis_net}
 \end{figure}
 
-Figure \ref{fig:calvis_net} shows our prototypical CNN Calvis-Net where the 
-input is a synthetic image from a 3D human mesh and the output are three body 
-dimensions. Implemented with pytorch \cite{paszke2017automatic}. We train the 
-network for 20 epochs and perform. In order to estimate the generalization 
-error we conduct 3-fold cross-validation with skorch. We report the average 
-test set score of the $k$ rounds of learning.
-
-
-
-We achieve mean absolute validation error of 
-12 mm.
-
+Figure \ref{fig:calvis_net} shows our prototypical CNN Calvis-Net implemented 
+with pytorch \cite{paszke2017automatic}. The 
+input is a synthetic grayscale image from a 3D human mesh of size $\mathtt{200 
+x 200 x 
+1}$. The input layer is followed by a convolutional layer $\mathtt{CL}_1$ with 
+$\mathtt{3}$ 2D-kernels of 
+size $\mathtt{5 x 5}$ and max pooling $\mathtt{MP}$ over a $\mathtt{2 x 2}$ 
+volume. The network continues then with the rectified linear activation function
+(ReLU). The last layer (fully connected $\mathtt{FC}$) regresses directly three 
+body 
+dimensions: chest, waist and pelvis circumference. We train the network for 20 
+epochs and perform 3-fold 
+cross-validation, achieving mean absolute validation error of 12 
+mm.
 
 %------------------------------------------------------------------------
 \section{Conclusion}
 In this paper we presented CALVIS, a method to calculate chest, waist and pelvis circumference from 3D human meshes. 
 We demonstrate that our approach can be used to train a CNN by imputing synthetic images of humans and using the measurements calculated with CALVIS as supervision signal.
-Furthermore, we contribute with a prototype CNN CALVIS-NET. Our experiments show that the CNN is able to learn how to perform this task, achieving mean absolute validation error of 0.061698 m plus +-.
+Furthermore, we contribute with a prototype CNN CALVIS-NET. Our experiments show that the CNN is able to learn how to perform this task, achieving competitive mean absolute validation error.
 The code 
 and data use 
 in this paper will be made publicly available for researchers.

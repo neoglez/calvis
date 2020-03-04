@@ -1,0 +1,262 @@
+\documentclass{article}
+\usepackage{a4wide}
+\title{Response to the Reviewer's Comments}
+\author{Yansel Gonzalez Tejeda \and	Helmut Mayer}
+\begin{document}
+
+\maketitle
+
+We thank the reviewers for identifying the weaknesses in our paper and 
+providing us the opportunity to strengthen our research prior to publication.
+
+The comments of the reviewers have been very useful, for they
+made us aware that some major points we were trying to convey
+remained obscure even to well-informed readers.
+
+Following up
+on the reviewers' suggestions, we have restructured the paper
+by changing the order of some sections, by putting more emphasis
+on motivation, and by adding clarifications at crucial spots.
+
+In addition, we have also corrected all factual errors and
+minor infelicities of presentation that the reviewers brought
+to our attention. Below we indicate for each individual comment
+how we have dealt with it.
+
+\section*{Reviewer 1}
+\begin{verbatim}
+> 1)English and equations in the current paper are terrible. The authors need
+> to improve the spelling, structure and presentation of the paper.
+\end{verbatim}
+
+\begin{verbatim}
+> 2) The authors used many abbreviation words without providing any explanation.
+\end{verbatim}
+
+For all abbreviation we add the corresponding meaning. For example, Skinned 
+Multi-Person Linear (SMPL), 
+
+\begin{verbatim}
+> 3) There are several typo errors.
+> For example:
+> pg 3 :
+> The SCAPE model[3] opened wide possibilities in the field. ??? which field ?
+\end{verbatim}
+
+We added the clarification: "in the field of human shape estimation".
+
+\begin{verbatim}
+> has been strongly influence --> influenced
+> no human body dimensions are computed of estimated.--> from the estimated
+> model
+> do not require that level of detail. --> such level of detail
+\end{verbatim}
+
+ We have corrected these errors.
+
+\begin{verbatim}
+> 4) The authors used the SMPL generative human body model, developed in 2015
+> to synthesize 3D human meshes.
+\end{verbatim}
+
+Yes, we do. Here we are not able to grasp the intention of the 
+reviewer.
+
+\begin{verbatim}
+> 5) pg 13, it is not accurate to say "The automatic annotation process took
+> approximately 1 h 47 min in an enhanced modern personal computer." What are
+> the characteristics of the computer ?
+\end{verbatim}
+
+\begin{verbatim}
+> 6) The description of the bloc diagram of the CNN Calvis-Net depicted in fig
+> 6, page 12, is missed; The proposed CNN architecture is not convincing. No
+> detail has been provided about the relation and the functioning of the
+> weight, the convolutional and the FC layers.
+\end{verbatim}
+
+\begin{verbatim}
+> 7) The results are far from being convincible. Experimental results are with
+> limited 3D articulated meshes. It would be better if some quantified
+> indicators are used (Accuracy assessment).
+\end{verbatim} 
+
+We take the point, and we think our new version is much clearer.
+
+\section*{Reviewer 2}
+\begin{verbatim}
+> 1). It is not clear how 8 images can be used to train CNN with ground trut
+> of 3 measures.
+\end{verbatim}
+\begin{verbatim}
+> 2). It is not clear how novel the proposed measurement calculation is.
+\end{verbatim}
+\begin{verbatim}
+> 3). there is no comparison with existing methods
+\end{verbatim}
+
+We read the objection of the reviewer as a complaint about the
+story line. Our restructuring should have remedied this.
+
+We now emphasize the real reason why we want the reduction axioms:
+as a tool for {\em compositional analysis} of the epistemic effects of
+many different types of information-carrying event. It is actually
+surprising that this is possible. We see this compositional analysis
+as the heart of dynamic epistemic logic, not just a negotiable
+'luxury' for some cases. As a side-effect, such axioms
+'reduce' a complete dynamic epistemic language to its static
+epistemic base -- but this is a consequence of the analysis,
+not the main motivation. Of course, as we now also stress, this
+reduction does have another interesting interpretation by itself:
+the static language must be rich enough to 'pre-encode' the
+effects of the relevenat class of informational events. This
+is a requirement on optimal language design which is also known
+from other areas of logic, such as conditional logic vis-a-vis
+belief revision. Finally, and we may have given the wrong
+impression that *this* was our main point: the reduction
+analysis tends to make for simpler completeness proofs,
+and some direct borrowing of known properties of the
+static base into the full dynamic system.
+
+What we also find interesting is how this methodology puts us on
+the track of new epistemic operators that have not been isolated
+as important before, even though they were there just below the
+surface. In particular, relativized common knowledge seems a
+new notion of independent interest.
+
+\section*{Reviewer 3}
+\begin{verbatim}
+> Overall, the paper is very well written. However, the main contributions are
+> not clear.
+\end{verbatim}
+
+\begin{verbatim}
+> The segmentation method is also too constrained as it requires the
+> shapes to be a pre-defined position.
+\end{verbatim}
+
+\begin{verbatim}
+> The paper should also try and compare with other existing segmentation
+> algorithms. This is a very well studied topic, see for example:
+> https://scholar.google.com.au/scholar?
+> q=3d+mesh+segmentation&hl=en&as_sdt=0&as_vis=1&oi=scholart
+\end{verbatim}
+
+While we appreciate the reviewer recommendation, it has to be said that we do 
+not focus on a comparative analysis of segmentation algorithms. Nevertheless, 
+we do think that we could perform such as analysis on future works.
+
+\section*{Reviewer 4}
+\begin{verbatim}
+> Thank you for sharing the generated database.
+\end{verbatim} 
+
+We are glad to contribute and thank the reviewer for this encouraging, 
+motivational and 
+constructive comment.
+
+\section*{Reviewer 5}
+\begin{verbatim}
+> The main contribution of this paper is to computing the human body dimensions
+> based on the geometric methods and meanwhile to testing the CNN-based
+> regression method. However, I have the following concerns:
+> 1. The experimental details related to the CNN-based method are missing. The
+> detailed hyper-parameters used for CNN training and testing are missing.
+\end{verbatim}
+
+The reviewer is right. We add the experimental details. See also address to 
+reviewer 5
+
+\begin{verbatim}
+> 2. There is no comparisons with other related methods. The error of 12mm
+> achieved in this paper has no reference score.
+\end{verbatim}
+
+\begin{verbatim}
+> 3. Overall, I think the problem of 3D human shape measurement is a important
+> task, and the geometric method used in this paper has a certain contribution
+> to this task.
+\end{verbatim}
+
+We are glad to contribute and thank the reviewer for this encouraging, 
+motivational and 
+constructive comment.
+
+\begin{verbatim}
+> 4. The presentation of this paper is not smooth.
+\end{verbatim} 
+
+
+The new presentation makes our intentions clearer, we think.
+The completeness proof of the logic of epistemic action models as
+provided by Baltag, Moss and Solecki is complicated. Our method of
+reduction axioms allows us to `lift' the elegant PDL completeness
+proof to the logic of epistemic action models. And again: the
+reduction axioms that we find are interesting in their own right
+as we are after compositional analysis of epistemic effects of events
+observed in groups of agents, and earlier dynamic epistemic logic were
+simply unable to provide that methodology for common knowledge.
+
+The `point' of LCC is to show that `really' epistemic PDL, contrary to
+what the designs of intricate logics of communication and knowledge
+suggest, is all that is needed for a rich logic of communication and
+change. So if anything, this is a new vindication of PDL, rather than
+a criticism of it.
+
+It has to be said, though, that we do not provide a knock-down argument
+why this full system is {\em needed} for our style of analysis. We have
+not been able to find anything weaker that works, but our list of
+open questions at the end does ask if other weaker 'solutions' exist.
+
+\section*{Reviewer 7}
+\begin{verbatim} 
+> Very interesting work with a recent bibliographic study, nevertheless the
+> experimentation part lacks comparative study with the existing one and
+> especially in term of algorithmic complexity
+\end{verbatim}
+
+We hope that our new version is much more focussed.
+
+The author is right on one further point. We have chosen to add
+events that change the world to the standard DEL-framework, since
+we feel that this increases the scope with little effort, while
+still operating with the same methodology. But it is clear that
+this is orthogonal to our main points. We have considered taking
+it out (but that seemed a pity), or to put it into a separate
+section: but that would lead to too much duplication. Our solution
+now is to leave the story combined, while pointing out to the reader
+who so prefers that a 'change-free' reading of our main notions and
+results can be obtained by merely omitting all our technical talk
+about substitutions.
+
+\begin{verbatim}
+> As far as style is concerned, the work "perspicuous" appears three
+> times on the first page; once in the abstract, and twice in the
+> second paragraph. While perspicuous is a delicious word, it is rare
+> enough that seeing it three times makes one frown.
+\end{verbatim} 
+
+We have rephrased things using a wider repertoire of adjectives.
+
+\begin{verbatim}
+> Also, typo on p.3,
+> first paragraph of 2.1: "PLaza" instead of "Plaza".
+\end{verbatim}
+
+Corrected.
+
+\begin{verbatim} 
+>>REFEREE REPORT 2<<
+> List of typos, corrections and comments:
+>
+> 1. One of the key definitions ...
+\end{verbatim}
+
+The referee is correct that this definition was wrong.
+
+The following change solves the problem. We now take the transitive
+closure rather than the *reflexive* transitive closure in the
+definition. We have adapted the rest of the text including the
+axioms accordingly, and now also the remark on page 5 is correct.
+
+\end{document}
