@@ -19,6 +19,7 @@ import os
 import json
 import math
 import locale
+import trimesh
 #locale.setlocale(locale.LC_NUMERIC,"C")
 
 cmu_dataset_path = '/home/neoglez/cmu'
@@ -160,13 +161,11 @@ faces = faces - 1
 #printc('points():\n', m.points()[0])
 #printc('faces(): \n', m.faces()[0])
 
-#embedWindow('itkwidgets') # or k3d
-settings.embedWindow(False)
-#settings.embedWindow(backend="k3d")
-vp = Plotter()
-m = Mesh([verts, faces])
-#m = vp.load(human)
-#m = Points(verts)
-m.color('blue')
-vp += m
-vp.show()
+# attach to logger so trimesh messages will be printed to console
+trimesh.util.attach_to_log()
+
+# mesh objects can be created from existing faces and vertex data
+mesh = trimesh.Trimesh(vertices=verts,
+                       faces=faces)
+#print(mesh.is_watertight)
+mesh.show()
