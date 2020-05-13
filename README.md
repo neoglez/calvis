@@ -162,14 +162,18 @@ You might want to do a partial download depending on your needs.
 If you use this code, please cite the following:
 
 ```
-@misc{tejeda2020calvis,
-    title={CALVIS: chest, waist and pelvis circumference from 3D human body meshes as ground truth for deep learning},
-    author={Gonzalez Tejeda, Yansel and Mayer, Helmut A.},
-    year={2020},
-    eprint={2003.00834},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV},
-    note={14 pages, 6 figures. To appear in the Proceedings of the VIII International Workshop on Representation, analysis and recognition of shape and motion FroM Imaging data (RFMI 2019), 11-13 December 2019, Sidi Bou Said, Tunisia},
+@misc{ygtham2020calvis,
+	title={CALVIS: chest, waist and pelvis circumference from 3D human body 
+	meshes as ground truth for deep learning},
+	author={Gonzalez Tejeda, YAnsel and Mayer, Helmut A.},
+	year={2020},
+	eprint={2003.00834},
+	archivePrefix={arXiv},
+	primaryClass={cs.CV},
+	note={14 pages, 6 figures. To appear in the Proceedings of the VIII 
+	International Workshop on Representation, analysis and recognition of shape 
+	and motion FroM Imaging data (RFMI 2019), 11-13 December 2019, Sidi Bou 
+	Said, Tunisia},
 }
 ```
 
