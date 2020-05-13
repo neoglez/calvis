@@ -1,17 +1,12 @@
 # calvis
 CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep Learning, RFMI 2019
 
-<p align="center">
-<img src="http://example.com/calvis.gif"
-</p>
-
-
 [Yansel Gonzalez Tejeda](http://example.com/ygt/) and [Helmut A. Mayer](https://www.cosy.sbg.ac.at/~helmut/helmut.html)
 
 [[Project page - TBD]](http://example.com) [[arXiv]](https://arxiv.org/abs/2003.00834)
 
 <p align="center">
-<img src="http://www.di.ens.fr/willow/research/surreal/images/surreal.gif"
+<img src="http://example.com/calvis.gif"
 </p>
 
 ## Contents
@@ -169,7 +164,7 @@ If you use this code, please cite the following:
 ```
 @misc{tejeda2020calvis,
     title={CALVIS: chest, waist and pelvis circumference from 3D human body meshes as ground truth for deep learning},
-    author={Gonzalez Tejeda, YAnsel and Mayer, Helmut A.},
+    author={Gonzalez Tejeda, Yansel and Mayer, Helmut A.},
     year={2020},
     eprint={2003.00834},
     archivePrefix={arXiv},
