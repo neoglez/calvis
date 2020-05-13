@@ -4,7 +4,7 @@
 Please read carefully the following terms and conditions and any accompanying documentation before you download and/or use the CALVIS Code and Dataset ("CALVIS"). By downloading and/or using CALVIS, you acknowledge that you have read these terms and conditions, understand them, and agree to be bound by them. If you do not agree with these terms and conditions, you must not download and/or use CALVIS.
 
 ## Ownership
-CALVIS has been developed by Yansel Gonzalez Tejeda and Helmut A. Mayer hereinafter collectively “Owners”).
+CALVIS has been developed by Yansel Gonzalez Tejeda and Helmut A. Mayer (hereinafter collectively “Owners”).
 
 ## License Grant
 Owners grant you a non-exclusive, non-transferable, free of charge right:
