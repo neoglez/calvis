@@ -30,21 +30,12 @@ CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep
 * [2. Create your own synthetic data](https://github.com/neoglez/calvis#2-create-your-own-synthetic-data)
 * [3. Training models](https://github.com/neoglez/calvis#3-training-models)
 * [4. Storage info](https://github.com/neoglez/calvis#4-storage-info)
-* [Citation](https://github.com/neoglez/surreal#citation)
+* [Citation](https://github.com/neoglez/calvis#citation)
 * [License](https://github.com/neoglez/calvis#license)
 * [Acknowledgements](https://github.com/neoglez/calvis#acknowledgements)
 
 ## 1. Download CALVIS dataset
 
-In order to download SURREAL dataset, you need to accept the license terms. The links to license terms and download procedure are available here:
-
-https://www.di.ens.fr/willow/research/surreal/data/
-
-Once you receive the credentials to download the dataset, you will have a personal username and password. Use these either to download the dataset excluding optical flow data from [here: (SURREAL_v1.tar.gz, 86GB)](https://lsh.paris.inria.fr/SURREAL/SURREAL_v1.tar.gz) or download individual files with the `download/download_surreal.sh` script as follows:
-
-``` shell
-./download_surreal.sh /path/to/dataset yourusername yourpassword
-```
 
 You can check [Storage info](https://github.com/gulvarol/surreal#4-storage-info) for how much disk space they require and can do partial download.
 
@@ -170,9 +161,9 @@ To obtain the final results, you can run x.x.
 
 You might want to do a partial download depending on your needs.
 
-| Dataset            | 1    |  2    | Total  |
-| ------------------ |-----:| -----:| ------:|
-| **CALVIS**         | 3.8G | 6.0G  | 82.5G  |
+| Dataset     | 8 Meshes | 3803 Meshes | 3803 (200x200x1) Synthetic images | Annotations | Total |
+| -----------:|---------:|------------:|----------------------------------:|------------:|------:|
+| CALVIS      | 3.3MB    | 1.5GB       |   16MB                            | 1.8MB       | 1.6GB |
 
 ## Citation
 If you use this code, please cite the following:
@@ -197,6 +188,8 @@ If you use this code, please cite the following:
 Please check the [license terms](https://github.com/neoglez/calvis/blob/master/LICENSE.md) before downloading and/or using the code, the models and the data.
 
 ## Acknowledgements
-The data generation code is built by YGT
+The [SMPL team](https://smpl.is.tue.mpg.de/) for providing us with the learned human body templates and the SMPL code.
 
-The training code is written by YGT
+The data generation code is heavely inspired by the [SURREAL repo](https://github.com/gulvarol/surreal.
+
+The [vtkplotter team](https://github.com/marcomusy/vtkplotter) (specially Marco Musy) and the [trimesh team](https://github.com/mikedh/trimesh) for the great visualization and intersection libraries.
