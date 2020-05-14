@@ -1,12 +1,28 @@
 # calvis
 CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep Learning, RFMI 2019
 
-[Yansel Gonzalez Tejeda](http://example.com/ygt/) and [Helmut A. Mayer](https://www.cosy.sbg.ac.at/~helmut/helmut.html)
+[Yansel Gonzalez Tejeda](http://neoglez.xyz) and [Helmut A. Mayer](https://www.cosy.sbg.ac.at/~helmut/helmut.html)
 
 [[Project page - TBD]](http://example.com) [[arXiv]](https://arxiv.org/abs/2003.00834)
 
 <p align="center">
-<img src="http://example.com/calvis.gif"
+<img src="/img/subjects_2_6_calvis_segmented.png"
+</p>
+
+<p align="center">
+<img src="/img/axilla_recognition_80_NN.png"
+</p>
+
+<p align="center">
+<img src="/img/mesh_signature.png"
+</p>
+
+<p align="center">
+<img src="/img/experiment_1_results.png"
+</p>
+
+<p align="center">
+<img src="/img/Calvis-Net.png"
 </p>
 
 ## Contents
