@@ -9,3 +9,5 @@ code/__pycache__
 .ipynb_checkpoints/
 
 code/runs/learning_with_calvis_net_experiment_1/
+
+datageneration/smpl_data/

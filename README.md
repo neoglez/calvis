@@ -27,7 +27,7 @@ CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep
 
 ## Contents
 * [1. Download CALVIS dataset](https://github.com/neoglez/calvis#1-download-calvis-dataset)
-* [2. or Create your own synthetic data](https://github.com/neoglez/calvis#2-create-your-own-synthetic-data)
+* [2. or Create your own synthetic data](https://github.com/neoglez/calvis#2-or-create-your-own-synthetic-data)
 * [3. Training models](https://github.com/neoglez/calvis#3-training-models)
 * [4. Storage info](https://github.com/neoglez/calvis#4-storage-info)
 * [Citation](https://github.com/neoglez/calvis#citation)
@@ -63,7 +63,7 @@ CALVIS/dataset/
 ### 2.1. Preparation
 #### 2.1.1. SMPL data
 
-a) You need to download SMPL data from http://smpl.is.tue.mpg.de in order to run the synthetic data generation code. Once you agree on SMPL license terms and have access to downloads, you will have the following three files:
+a) You need to download SMPL data from http://smpl.is.tue.mpg.de and https://www.di.ens.fr/willow/research/surreal/data/ in order to run the synthetic data generation code. Once you agree on SMPL license terms and have access to downloads, you will have the following three files:
 
 ```
 basicModel_f_lbs_10_207_0_v1.0.0.pkl
