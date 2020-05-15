@@ -7,21 +7,24 @@ Created on Wed Aug  7 09:22:49 2019
 """
 import numpy as np
 import pickle
-from OSmpl import KJointPredictor, OSmplTemplate, OSmpl
-from Synthesizer import Synthesizer
+import hbm
 import os
 import json
 import math
 
-cmu_dataset_path = "/home/neoglez/cmu"
-cmu_dataset_meshes_path = "/home/neoglez/cmu/dataset/human_body_meshes/"
+cmu_dataset_path = "../CALVIS/dataset/cmu/"
+cmu_dataset_meshes_path = "../CALVIS/dataset/cmu/human_body_meshes/"
 cmu_dataset_meshes_path_length = len(cmu_dataset_meshes_path)
-cmu_dataset_annotation_path = "/home/neoglez/cmu/dataset/annotations/"
+cmu_dataset_annotation_path = "../CALVIS/dataset/cmu/annotations/"
 
-SMPL_basicModel_f_lbs_path = "./basicModel_f_lbs_10_207_0_v1.0.0.pkl"
-SMPL_basicModel_m_lbs_path = "./basicmodel_m_lbs_10_207_0_v1.0.0.pkl"
+smpl_data_folder = "../datageneration/smpl_data/"
 
-smpl_data_folder = "/home/neoglez/smpl_data/SURREAL/smpl_data/"
+SMPL_basicModel_f_lbs_path = (
+    smpl_data_folder + "basicModel_f_lbs_10_207_0_v1.0.0.pkl"
+)
+SMPL_basicModel_m_lbs_path = (
+    smpl_data_folder + "basicmodel_m_lbs_10_207_0_v1.0.0.pkl"
+)
 
 smpl_data_filename = "smpl_data.npz"
 
@@ -32,15 +35,6 @@ femaleshapes = smpl_data["femaleshapes"]
 
 
 betas = {"female": femaleshapes, "male": maleshapes}
-
-SMPL_basicModel_f_lbs_path = (
-        "/media/neoglez/Data1/privat/PhD_Uni_Salzburg"
-        "/DATASETS/smpl/models/basicModel_f_lbs_10_207_0_v1.0.0.pkl"
-)
-SMPL_basicModel_m_lbs_path = (
-    "/media/neoglez/Data1/privat/PhD_Uni_Salzburg"
-    "/DATASETS/smpl/models/basicmodel_m_lbs_10_207_0_v1.0.0.pkl"
-)
 
 try:
     # Load pkl created in python 2.x with python 2.x
@@ -61,16 +55,16 @@ except:
 
 k_joints_predictor = female_model.get("J_regressor").A
 
-new_female_joint_regressor = KJointPredictor(k_joints_predictor)
+new_female_joint_regressor = hbm.KJointPredictor(k_joints_predictor)
 
 k_joints_predictor = male_model.get("J_regressor").A
 
-new_male_joint_regressor = KJointPredictor(k_joints_predictor)
+new_male_joint_regressor = hbm.KJointPredictor(k_joints_predictor)
 
 ####################################################################
 # Initialize the Osmpl female and male template.                   #
 ####################################################################
-new_female_template = OSmplTemplate(
+new_female_template = hbm.OSmplTemplate(
     female_model.get("v_template"),
     female_model.get("f"),
     female_model.get("blend_weights"),
@@ -78,7 +72,7 @@ new_female_template = OSmplTemplate(
     new_female_joint_regressor,
     female_model.get("posedirs"),
 )
-new_male_template = OSmplTemplate(
+new_male_template = hbm.OSmplTemplate(
     male_model.get("v_template"),
     male_model.get("f"),
     male_model.get("blend_weights"),
@@ -90,10 +84,10 @@ new_male_template = OSmplTemplate(
 ####################################################################
 # Once we have the template we instanciate the complete model.     #
 ####################################################################
-human_female_model = OSmpl(
+human_female_model = hbm.OSmpl(
     new_female_template, female_model.get("shapedirs").x, None, None
 )
-human_male_model = OSmpl(
+human_male_model = hbm.OSmpl(
     new_male_template, male_model.get("shapedirs").x, None, None
 )
 
@@ -102,7 +96,7 @@ human_male_model = OSmpl(
 # In our case this is 6890 x 3 x 10 for both female and male models.
 number_of_PCAs = female_model.get("shapedirs").shape[-1]
 
-synthesizer = Synthesizer(
+synthesizer = hbm.Synthesizer(
     "smpl",
     number_of_male_models=1,
     number_of_female_models=1,

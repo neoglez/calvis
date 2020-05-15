@@ -63,7 +63,7 @@ CALVIS/dataset/
 ### 2.1. Preparation
 #### 2.1.1. SMPL data
 
-a) You need to download SMPL data from http://smpl.is.tue.mpg.de and https://www.di.ens.fr/willow/research/surreal/data/ in order to run the synthetic data generation code. Once you agree on SMPL license terms and have access to downloads, you will have the following three files:
+You need to download SMPL data from http://smpl.is.tue.mpg.de and https://www.di.ens.fr/willow/research/surreal/data/ in order to run the synthetic data generation code. Once you agree on SMPL license terms and have access to downloads, you will have the following three files:
 
 ```
 basicModel_f_lbs_10_207_0_v1.0.0.pkl
@@ -75,6 +75,7 @@ Place these three files under `datageneration/smpl_data` folder.
 
 
 ``` shell
+
 smpl_data/
 --------- smpl_data.npz # 2.5GB
  # trans*           [T x 3]     - (T: number of frames in MoCap sequence)
@@ -85,11 +86,22 @@ smpl_data/
  # joint_regressor  [24 x 232]
 ```
 
-#### 2.1.2. Background images with Blender
+#### 2.1.2. Human Body Models utilities
+
+You need to install [Human Body Models](https://github.com/neoglez/hbm).
+
+``` shell
+
+git clone http://github.com/neoglez/hbm.git
+cd hbm
+pip install
+```
+
+#### 2.1.3. Background images with Blender
 
 You need to download [Blender](http://download.blender.org/release/) and install scipy package. The provided code was tested with [Blender2.82](https://www.blender.org/download), which is shipped with its own python executable as well as distutils package. Therefore, it is sufficient to do the following:
 
-#### 2.1.2. VtkPlotter and Trimesh
+#### 2.1.4. VtkPlotter and Trimesh
 
 ### 2.2. Annotating with CALVIS
 
