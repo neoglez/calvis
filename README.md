@@ -39,7 +39,6 @@ CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep
 
 You can check [Storage info](https://github.com/gulvarol/surreal#4-storage-info) for how much disk space they require and can do partial download.
 
-Find under `datageneration/misc/3Dto2D` scripts that explain the projective relations between joints2D and joints3D variables.
 
 The structure of the folders is as follows:
 
