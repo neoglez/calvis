@@ -26,7 +26,7 @@ CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep
 </p>
 
 ## Contents
-* [1. Download CALVIS dataset](https://github.com/neoglez/surreal#1-download-surreal-dataset)
+* [1. Download CALVIS dataset](https://github.com/neoglez/calvis#1-download-calvis-dataset)
 * [2. Create your own synthetic data](https://github.com/neoglez/calvis#2-create-your-own-synthetic-data)
 * [3. Training models](https://github.com/neoglez/calvis#3-training-models)
 * [4. Storage info](https://github.com/neoglez/calvis#4-storage-info)
@@ -37,7 +37,7 @@ CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep
 ## 1. Download CALVIS dataset
 
 
-You can check [Storage info](https://github.com/gulvarol/surreal#4-storage-info) for how much disk space they require and can do partial download.
+You can check [Storage info](https://github.com/neoglez/calvis#4-storage-info) for how much disk space they require and can do partial download.
 
 Find under `datageneration/misc/3Dto2D` scripts that explain the projective relations between joints2D and joints3D variables.
 
@@ -132,12 +132,12 @@ Here, we provide code to train models on the synthetic data to predict body segm
 ### 3.1. Preparation
 
 #### 3.1.1. Requirements
-* Install [Torch](https://github.com/torch/distro) with [cuDNN](https://developer.nvidia.com/cudnn) support.
+* Install [pytorch](https://pytorch.org/) with [CUDA](https://developer.nvidia.com/cuda-downloads) support.
 * Install [matio](https://github.com/soumith/matio-ffi.torch) by `luarocks install matio`
 * Install [OpenCV-Torch](https://github.com/VisionLabs/torch-opencv) by `luarocks install cv`
 * Download [CALVIS](https://github.com/neoglez/calvis)
 
-*Tested on Linux (Ubuntu 16.04) with cuda v8 and cudNN v5.1. Let me know if there are other major dependencies that I forgot to include.*
+*Tested on Linux (Ubuntu 16.04) with cuda 10.2*
 
 #### 3.1.2. Setup paths
 Place the data under `~/datasets/CALVIS` or change the `opt.dataRoot` in opts.lua. The outputs will be written to `~/cnn_saves/<datasetname>/<experiment>`, you can change the `opt.logRoot` to change the `cnn_saves` location.
@@ -190,6 +190,6 @@ Please check the [license terms](https://github.com/neoglez/calvis/blob/master/L
 ## Acknowledgements
 The [SMPL team](https://smpl.is.tue.mpg.de/) for providing us with the learned human body templates and the SMPL code.
 
-The data generation code is heavely inspired by the [SURREAL repo](https://github.com/gulvarol/surreal.
+The data generation code and this repo structure is heavely inspired by [Gül Varol's](https://www.robots.ox.ac.uk/~gul/) [SURREAL repo](https://github.com/gulvarol/surreal.
 
 The [vtkplotter team](https://github.com/marcomusy/vtkplotter) (specially Marco Musy) and the [trimesh team](https://github.com/mikedh/trimesh) for the great visualization and intersection libraries.
