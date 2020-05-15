@@ -87,7 +87,7 @@ smpl_data/
 
 #### 2.1.2. Background images with Blender
 
-You need to download [Blender](http://download.blender.org/release/) and install scipy package to run the first part of the code. The provided code was tested with [Blender2.78](http://download.blender.org/release/Blender2.78/blender-2.78a-linux-glibc211-x86_64.tar.bz2), which is shipped with its own python executable as well as distutils package. Therefore, it is sufficient to do the following:
+You need to download [Blender](http://download.blender.org/release/) and install scipy package. The provided code was tested with [Blender2.82](https://www.blender.org/download), which is shipped with its own python executable as well as distutils package. Therefore, it is sufficient to do the following:
 
 #### 2.1.2. VtkPlotter and Trimesh
 
@@ -160,6 +160,6 @@ Please check the [license terms](https://github.com/neoglez/calvis/blob/master/L
 ## Acknowledgements
 The [SMPL team](https://smpl.is.tue.mpg.de/) for providing us with the learned human body templates and the SMPL code.
 
-The data generation code and this repo structure is heavely inspired by [Gül Varol's](https://www.robots.ox.ac.uk/~gul/) [SURREAL repo](https://github.com/gulvarol/surreal.
+The data generation code and this repo structure is heavely inspired by [Gül Varol's](https://www.robots.ox.ac.uk/~gul/) [SURREAL repo](https://github.com/gulvarol/surreal).
 
 The [vtkplotter team](https://github.com/marcomusy/vtkplotter) (specially Marco Musy) and the [trimesh team](https://github.com/mikedh/trimesh) for the great visualization and intersection libraries.

@@ -11,3 +11,5 @@ code/__pycache__
 code/runs/learning_with_calvis_net_experiment_1/
 
 datageneration/smpl_data/
+
+CALVIS/dataset/cmu/
