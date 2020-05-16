@@ -94,7 +94,7 @@ You need to install [Human Body Models](https://github.com/neoglez/hbm).
 
 git clone http://github.com/neoglez/hbm.git
 cd hbm
-pip install
+pip install .
 ```
 
 #### 2.1.3. Background images with Blender
