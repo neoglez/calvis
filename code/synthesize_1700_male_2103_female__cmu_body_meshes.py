@@ -12,10 +12,10 @@ import os
 import json
 import math
 
-cmu_dataset_path = "../CALVIS/dataset/cmu/"
-cmu_dataset_meshes_path = "../CALVIS/dataset/cmu/human_body_meshes/"
+cmu_dataset_path = "./CALVIS/dataset/cmu/"
+cmu_dataset_meshes_path = "./CALVIS/dataset/cmu/human_body_meshes/"
 cmu_dataset_meshes_path_length = len(cmu_dataset_meshes_path)
-cmu_dataset_annotation_path = "../CALVIS/dataset/cmu/annotations/"
+cmu_dataset_annotation_path = "./CALVIS/dataset/cmu/annotations/"
 
 smpl_data_folder = "../datageneration/smpl_data/"
 
@@ -71,6 +71,7 @@ new_female_template = hbm.OSmplTemplate(
     female_model.get("shape_blend_shapes"),
     new_female_joint_regressor,
     female_model.get("posedirs"),
+    None
 )
 new_male_template = hbm.OSmplTemplate(
     male_model.get("v_template"),
@@ -79,15 +80,16 @@ new_male_template = hbm.OSmplTemplate(
     male_model.get("shape_blend_shapes"),
     new_male_joint_regressor,
     male_model.get("posedirs"),
+    None
 )
 
 ####################################################################
 # Once we have the template we instanciate the complete model.     #
 ####################################################################
-human_female_model = hbm.OSmpl(
+human_female_model = hbm.OSmplWithPose(
     new_female_template, female_model.get("shapedirs").x, None, None
 )
-human_male_model = hbm.OSmpl(
+human_male_model = hbm.OSmplWithPose(
     new_male_template, male_model.get("shapedirs").x, None, None
 )
 
