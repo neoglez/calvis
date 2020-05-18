@@ -12,23 +12,23 @@ import os
 import json
 import math
 
-cmu_dataset_path = "./CALVIS/dataset/cmu/"
-cmu_dataset_meshes_path = "./CALVIS/dataset/cmu/human_body_meshes/"
+cmu_dataset_path = os.path.abspath("./../CALVIS/dataset/cmu/")
+cmu_dataset_meshes_path = os.path.join(cmu_dataset_path, "human_body_meshes/")
 cmu_dataset_meshes_path_length = len(cmu_dataset_meshes_path)
-cmu_dataset_annotation_path = "./CALVIS/dataset/cmu/annotations/"
+cmu_dataset_annotation_path = os.path.join(cmu_dataset_path, "annotations/")
 
-smpl_data_folder = "../datageneration/smpl_data/"
+smpl_data_folder = os.path.abspath("./../datageneration/smpl_data")
 
-SMPL_basicModel_f_lbs_path = (
-    smpl_data_folder + "basicModel_f_lbs_10_207_0_v1.0.0.pkl"
+SMPL_basicModel_f_lbs_path = os.path.join(
+    smpl_data_folder, "basicModel_f_lbs_10_207_0_v1.0.0.pkl"
 )
-SMPL_basicModel_m_lbs_path = (
-    smpl_data_folder + "basicmodel_m_lbs_10_207_0_v1.0.0.pkl"
+SMPL_basicModel_m_lbs_path = os.path.join(
+    smpl_data_folder, "basicmodel_m_lbs_10_207_0_v1.0.0.pkl"
 )
 
-smpl_data_filename = "smpl_data.npz"
+smpl_data_filename = os.path.join(smpl_data_folder, "smpl_data.npz")
 
-smpl_data = np.load(os.path.join(smpl_data_folder, smpl_data_filename))
+smpl_data = np.load(smpl_data_filename)
 
 maleshapes = smpl_data["maleshapes"]
 femaleshapes = smpl_data["femaleshapes"]
@@ -142,6 +142,13 @@ for gender in ["female", "male"]:
         )
 
         synthesizer.save_human_mesh(gender, outmesh_path)
+
+        if not os.path.exists(os.path.dirname(annotations_path)):
+            try:
+                os.makedirs(os.path.dirname(annotations_path))
+            except OSError as exc:  # Guard against race condition
+                if exc.errno != errno.EEXIST:
+                    raise
 
         with open(annotations_path, "w") as fp:
             # Write the betas. Since "the betas" is a matrix, we have to
