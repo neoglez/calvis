@@ -154,7 +154,7 @@ If you use this code, please cite the following:
 @misc{ygtham2020calvis,
 	title={CALVIS: chest, waist and pelvis circumference from 3D human body 
 	meshes as ground truth for deep learning},
-	author={Gonzalez Tejeda, YAnsel and Mayer, Helmut A.},
+	author={Gonzalez Tejeda, Yansel and Mayer, Helmut A.},
 	year={2020},
 	eprint={2003.00834},
 	archivePrefix={arXiv},
