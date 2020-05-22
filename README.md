@@ -102,17 +102,11 @@ pip install .
 
 #### 2.1.3. Synthetic images with Blender
 
-In order to import the Blender Python binding (bpy), you can build with pip (it can take several minutes...).
-Note: We tested it under ubuntu 16.04 and needed to install svn in the base conda environment. Additionally, ensure that pip is at the latest version.
+Building Blender is a painful process. That is why we recommend to download and install the version that we used. The provided code was tested with [Blender2.78](http://download.blender.org/release/Blender2.78/blender-2.78a-linux-glibc211-x86_64.tar.bz2).
 
-``` shell
-
-pip install --upgrade pip wheel future-fstrings
-pip install bpy
-```
-
-
-You need to download [Blender](http://download.blender.org/release/) and install scipy package. The provided code was tested with [Blender2.82](https://www.blender.org/download), which is shipped with its own python executable as well as distutils package. Therefore, it is sufficient to do the following:
+Just open the Scripting view and load (or copy and paste) the script @synthesize_cmu_200x200_grayscale_images.py@
+Change the path correspondingly at @cmu_dataset_path = os.path.abspath("/home/youruser/YourCode/calvis/CALVIS/dataset/cmu/")@ and run the script.
+The process takes several minutes.
 
 #### 2.1.4. VtkPlotter and Trimesh
 

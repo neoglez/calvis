@@ -20,9 +20,9 @@ countfiles = 0
 # init scene
 scene = bpy.data.scenes["Scene"]
 # blender < v 2.80
-# scene.render.engine = "BLENDER_RENDER"
+scene.render.engine = "BLENDER_RENDER"
 # scene.render.engine = "CYCLES"
-scene.render.engine = "BLENDER_EEVEE"
+# scene.render.engine = "BLENDER_EEVEE"
 # set camera properties and initial position
 cam_ob = bpy.data.objects["Camera"]
 #scene.objects.active = cam_ob
@@ -46,7 +46,7 @@ cam_ob.data.sensor_width = 32
 cam_ob.data.type = "ORTHO"
 cam_ob.data.ortho_scale = 2.5
 # blender < v 2.80
-# cam_ob.data.draw_size = 0.5
+cam_ob.data.draw_size = 0.5
 
 # delete the default cube (which held the material) if any
 try:
@@ -63,16 +63,14 @@ lamp_objects = [o for o in bpy.data.objects if o.type == "LAMP"]
 if len(lamp_objects) == 0:
     # Create new lamp datablock
     # blender < v 2.80
-    # lamp_data = bpy.data.lamps.new(name="Lamp", type="POINT")
-
-    lamp_data = bpy.data.lights.new(name="Lamp", type='POINT')
+    lamp_data = bpy.data.lamps.new(name="Lamp", type="POINT")
 
     # Create new object with our lamp datablock
     lamp = bpy.data.objects.new(name="Lamp", object_data=lamp_data)
 
     # Link lamp object to the scene so it'll appear in this scene
     # blender < v 2.80
-    # scene.objects.link(lamp)
+    scene.objects.link(lamp)
 
     # link light object
     bpy.context.collection.objects.link(lamp)
@@ -100,8 +98,8 @@ scene.render.image_settings.color_mode = "BW"
 scene.render.image_settings.file_format = "PNG"
 # set the background color to white (R, G, B)
 # blender < v2.80
-# scene.world.horizon_color = (1, 1, 1)
-scene.world.color = (1, 1, 1)
+scene.world.horizon_color = (1, 1, 1)
+#scene.world.color = (1, 1, 1)
 # scene.cycles.device = 'GPU'
 
 bigbang_time = time.time()
@@ -126,13 +124,13 @@ for subdir, dirs, files in os.walk(female_directory):
         obj_object.active_material = bpy.data.materials["Material"]
         # update scene, if needed
         # blender < v2.80
-        # scene.update()
-        dg = bpy.context.evaluated_depsgraph_get()
-        dg.update()
+        scene.update()
+        #dg = bpy.context.evaluated_depsgraph_get()
+        #dg.update()
 
         # blender < v2.80
-        # scene.render.use_antialiasing = True
-        bpy.context.scene.display.render_aa = 'OFF'
+        scene.render.use_antialiasing = True
+        #bpy.context.scene.display.render_aa = 'OFF'
         scene.render.filepath = savepng
         # disable render output
         logfile = "/dev/null"
@@ -154,9 +152,9 @@ for subdir, dirs, files in os.walk(female_directory):
             bpy.data.meshes.remove(block)
 
         # blender < v2.80
-        # scene.update()
-        dg = bpy.context.evaluated_depsgraph_get()
-        dg.update()
+        scene.update()
+        #dg = bpy.context.evaluated_depsgraph_get()
+        #dg.update()
 
         # disable output redirection
         os.close(1)
@@ -184,8 +182,8 @@ for subdir, dirs, files in os.walk(male_directory):
         obj_object.active_material = bpy.data.materials["Material"]
         scene.update()
         # blender < v2.80
-        # scene.render.use_antialiasing = False
-        scene.render.render_aa = False
+        scene.render.use_antialiasing = False
+        #scene.render.render_aa = False
         scene.render.filepath = savepng
         # disable render output
         logfile = "/dev/null"
