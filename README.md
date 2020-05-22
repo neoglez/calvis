@@ -62,7 +62,7 @@ CALVIS/dataset/
 ## 2. or Create your own synthetic data
 ### 2.1. Preparation
 
-Please consider that in all cases, we install dependencies into a coda environment. 
+Please consider that in all cases, we install dependencies into a coda environment. The code was tested under ubuntu 16.04 with python 3.7.
 
 #### 2.1.1. SMPL data
 
@@ -91,7 +91,7 @@ smpl_data/
 
 #### 2.1.2. Human Body Models utilities
 
-You need to install [Human Body Models](https://github.com/neoglez/hbm). Please. consider installing all dependencies in a conda environment.
+You need to install [Human Body Models](https://github.com/neoglez/hbm). Please, consider installing all dependencies in a conda environment.
 
 ``` shell
 
@@ -110,13 +110,26 @@ The process takes several minutes.
 
 #### 2.1.4. VtkPlotter and Trimesh
 
+You need to install these two libraries:
+
+``` shell
+
+pip install -U vtkplotter
+pip install trimesh
+```
+
 ### 2.2. Annotating with CALVIS
 
-#### 2.1.2. Calculating chest, waist and pelvis circumference 
+#### 2.1.2. Calculating chest, waist and pelvis circumference
+Run the script `CalvisToCMUAnnotazer.py`
+The process takes several hours.
+
+#### 2.1.3. Visualize chest, waist and pelvis circumference
+Run the script `CalvisToCMUAnnotazer.py`
 
 ## 3. Training models
 
-Here, we provide code to train models on the synthetic data to predict body segmentation or depth. You can also find the models pre-trained on synthetic data.
+At this point you should have the input (synthetic images) and the supervision signal (calvis annotations). Here, we provide code to train models on the synthetic data to predict given the input chest, waist and pelvis circumference.
 
 ### 3.1. Preparation
 
