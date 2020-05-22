@@ -61,6 +61,9 @@ CALVIS/dataset/
 
 ## 2. or Create your own synthetic data
 ### 2.1. Preparation
+
+Please consider that in all cases, we install dependencies into a coda environment. 
+
 #### 2.1.1. SMPL data
 
 You need to download SMPL data from http://smpl.is.tue.mpg.de and https://www.di.ens.fr/willow/research/surreal/data/ in order to run the synthetic data generation code. Once you agree on SMPL license terms and have access to downloads, you will have the following three files:
@@ -88,7 +91,7 @@ smpl_data/
 
 #### 2.1.2. Human Body Models utilities
 
-You need to install [Human Body Models](https://github.com/neoglez/hbm).
+You need to install [Human Body Models](https://github.com/neoglez/hbm). Please. consider installing all dependencies in a conda environment.
 
 ``` shell
 
@@ -97,7 +100,17 @@ cd hbm
 pip install .
 ```
 
-#### 2.1.3. Background images with Blender
+#### 2.1.3. Synthetic images with Blender
+
+In order to import the Blender Python binding (bpy), you can build with pip (it can take several minutes...).
+Note: We tested it under ubuntu 16.04 and needed to install svn in the base conda environment. Additionally, ensure that pip is at the latest version.
+
+``` shell
+
+pip install --upgrade pip wheel future-fstrings
+pip install bpy
+```
+
 
 You need to download [Blender](http://download.blender.org/release/) and install scipy package. The provided code was tested with [Blender2.82](https://www.blender.org/download), which is shipped with its own python executable as well as distutils package. Therefore, it is sufficient to do the following:
 
