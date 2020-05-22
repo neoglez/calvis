@@ -104,8 +104,8 @@ pip install .
 
 Building Blender is a painful process. That is why we recommend to download and install the version that we used. The provided code was tested with [Blender2.78](http://download.blender.org/release/Blender2.78/blender-2.78a-linux-glibc211-x86_64.tar.bz2).
 
-Just open the Scripting view and load (or copy and paste) the script @synthesize_cmu_200x200_grayscale_images.py@
-Change the path correspondingly at @cmu_dataset_path = os.path.abspath("/home/youruser/YourCode/calvis/CALVIS/dataset/cmu/")@ and run the script.
+Just open the Scripting view and load (or copy and paste) the script `synthesize_cmu_200x200_grayscale_images.py`
+Change the path correspondingly at `cmu_dataset_path = os.path.abspath("/home/youruser/YourCode/calvis/CALVIS/dataset/cmu/")` and run the script.
 The process takes several minutes.
 
 #### 2.1.4. VtkPlotter and Trimesh
