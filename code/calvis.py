@@ -166,7 +166,7 @@ class Calvis:
         # we're going to slice the mesh into evenly spaced chunks along y
         # this takes the (2,3) bounding box and slices it into [miny, maxy]
         y_extents = self.trimesh.bounds[:, 1]
-        # slice every m model units (eg, meters) = every 1 mm.
+        # slice every m model units (eg, meters, dc, etc.) = every 1 mm.
         self.sliding_vector = np.flip(np.arange(*y_extents, step=m))
 
         intersections_boundary_length = []
@@ -192,7 +192,7 @@ class Calvis:
     def segmentation(self, N=10):
         """
         Returns the chest, waist and pelvis regions bounds. The lower bound of
-        one region is upper bound of the nextone. Therefore the function
+        one region is upper bound of the nextone. Therefore, the function
         returns (chest_upper_bound, chest_lower_bound/waist_upper_bound,
         waist_lower_bound/pelvis_upper_bound, pelvis_lower_bound).
     
@@ -214,10 +214,6 @@ class Calvis:
             for k, v in self.human_model.mean_template_shape.joint_names.items()
         )
 
-        # shoulder_xyz = joints_location[inverted_joint_names['R_Shoulder']]
-        # collar_xyz = joints_location[inverted_joint_names['R_Collar']]
-        # spine_xyz = joints_location[inverted_joint_names['Spine3']]
-        # chest_xyz = joints_location[inverted_joint_names['Spine2']]
         natural_waist_xyz = joints_location[inverted_joint_names["Spine1"]]
         pelvis_xyz = joints_location[inverted_joint_names["Pelvis"]]
         hip_xyz = joints_location[inverted_joint_names["R_Hip"]]
@@ -282,13 +278,18 @@ class Calvis:
                     elem > self.mesh_signature[i + 1]
                 )
             except:
-                print(i)
+                # uncomment to debug
+                # print(i)
+                pass
+
             try:
                 is_local_min = (self.mesh_signature[i - 1] > elem) and (
                     elem < self.mesh_signature[i + 1]
                 )
             except:
-                print(i)
+                # uncomment to debug
+                # print(i)
+                pass
 
             # construct a node for every element
             node = {
