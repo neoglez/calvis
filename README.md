@@ -38,6 +38,7 @@ CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep
 
 
 You can check [Storage info](https://github.com/neoglez/calvis#4-storage-info) for how much disk space they require and can do partial download.
+Download from the [Project page - coming soon](https://www.example.org)
 
 
 The structure of the folders is as follows:
@@ -114,7 +115,7 @@ You need to install these two libraries:
 
 ``` shell
 
-pip install -U vtkplotter
+conda install -c conda-forge vtkplotter
 pip install trimesh
 ```
 
@@ -125,7 +126,14 @@ Run the script `CalvisToCMUAnnotazer.py`
 The process takes several hours.
 
 #### 2.1.3. Visualize chest, waist and pelvis circumference
-Run the script `CalvisToCMUAnnotazer.py`
+To visualize at which points calvis is calculating the body measurements, follow the code in `display_one_by_one_8_subjects_calvis_with_vtkplotter_and_trimesh.py` or directly display it with jupyter notebook `display_one_by_one_8_subjects_calvis_with_vtkplotter_and_trimesh.ipynb`
+
+Note: To display the meshes in the browser, we use k3d backend. Install it with
+
+``` shell
+
+conda install -c conda-forge k3d
+```
 
 ## 3. Training models
 
@@ -135,28 +143,18 @@ At this point you should have the input (synthetic images) and the supervision s
 
 #### 3.1.1. Requirements
 * Install [pytorch](https://pytorch.org/) with [CUDA](https://developer.nvidia.com/cuda-downloads) support.
-* Install [matio](https://github.com/soumith/matio-ffi.torch) by `luarocks install matio`
-* Install [OpenCV-Torch](https://github.com/VisionLabs/torch-opencv) by `luarocks install cv`
 * Download [CALVIS](https://github.com/neoglez/calvis)
 
-*Tested on Linux (Ubuntu 16.04) with cuda 10.2*
+* For some visualizations you can install (optionally) SciPy and its image processing routines
 
-#### 3.1.2. Setup paths
-Place the data under `~/datasets/CALVIS` or change the `opt.dataRoot` in opts.lua. The outputs will be written to `~/cnn_saves/<datasetname>/<experiment>`, you can change the `opt.logRoot` to change the `cnn_saves` location.
+``` shell
 
-### 3.2. Running the code
-
-#### 3.2.1. Train
-There are sample scripts under `training/exp/train` directory that are self-explanatory. Those are used for the 'Synth' experiments in the paper. Check `opts.lua` script to see what options are available.
-
-#### 3.2.2. Visualize
-A few display functionalities are implemented to debug and visualize results. Example usage:
-```
-./training/exp/vis.sh 1 30 cmu eval val
+conda install -c anaconda scipy
+conda install -c anaconda scikit-image 
 ```
 
-#### 3.2.3. Evaluate
-To obtain the final results, you can run x.x.
+*Tested on Linux (Ubuntu 16.04) with cuda 10.2 on a GeForce GTX 1060 6GB graphic card*
+
 
 
 ## 4. Storage info
