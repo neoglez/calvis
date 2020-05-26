@@ -1,7 +1,7 @@
 # calvis
 CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep Learning, RFMI 2019
 
-[Yansel Gonzalez Tejeda](http://neoglez.xyz) and [Helmut A. Mayer](https://www.cosy.sbg.ac.at/~helmut/helmut.html)
+[Yansel Gonzalez Tejeda](http://github/neoglez) and [Helmut A. Mayer](https://www.cosy.sbg.ac.at/~helmut/helmut.html)
 
 [[Project page - TBD]](http://example.com) [[arXiv]](https://arxiv.org/abs/2003.00834)
 
@@ -135,27 +135,26 @@ Note: To display the meshes in the browser, we use k3d backend. Install it with
 conda install -c conda-forge k3d
 ```
 
-## 3. Training models
+## 3. Training and evaluating CalvisNet
 
-At this point you should have the input (synthetic images) and the supervision signal (calvis annotations). Here, we provide code to train models on the synthetic data to predict given the input chest, waist and pelvis circumference.
+At this point you should have the input (synthetic images) and the supervision signal (calvis annotations). Here, we provide code to train and evaluate CalvisNet on the synthetic data to predict given the input chest, waist and pelvis circumference.
 
 ### 3.1. Preparation
 
 #### 3.1.1. Requirements
 * Install [pytorch](https://pytorch.org/) with [CUDA](https://developer.nvidia.com/cuda-downloads) support.
 * Download [CALVIS](https://github.com/neoglez/calvis)
-
-* For some visualizations you can install (optionally) SciPy and its image processing routines
+* Install scikit-learn, SciPy and its image processing routines
 
 ``` shell
 
+conda install scikit-learn 
 conda install -c anaconda scipy
-conda install -c anaconda scikit-image 
+conda install -c anaconda scikit-image
 ```
 
 *Tested on Linux (Ubuntu 16.04) with cuda 10.2 on a GeForce GTX 1060 6GB graphic card*
-
-
+To train and evaluate calvis, follow the code in `train_calvis-net_cross_validation.py`
 
 ## 4. Storage info
 
