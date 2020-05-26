@@ -1,7 +1,7 @@
 # calvis
 CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep Learning, RFMI 2019
 
-[Yansel Gonzalez Tejeda](http://github/neoglez) and [Helmut A. Mayer](https://www.cosy.sbg.ac.at/~helmut/helmut.html)
+[Yansel Gonzalez Tejeda](https://github.com/neoglez) and [Helmut A. Mayer](https://www.cosy.sbg.ac.at/~helmut/helmut.html)
 
 [[Project page - TBD]](http://example.com) [[arXiv]](https://arxiv.org/abs/2003.00834)
 
