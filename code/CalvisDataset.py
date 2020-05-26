@@ -1,17 +1,9 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct 12 10:16:19 2018
-
-@author: yansel
-"""
-
 from __future__ import print_function, division
 import os
 import numpy as np
 import json
 from torch.utils.data import Dataset
 from skimage import io
-import matplotlib.pyplot as plt
 import random
 
 
@@ -256,9 +248,10 @@ class CalvisForSkorchFairCMU2DDataset(CalvisFairCMU2DDataset):
 
 
 if __name__ == "__main__":
+    import matplotlib.pyplot as plt
 
-    rootDir = "/home/neoglez/cmu/dataset/"
-    imageDir = "/home/neoglez/cmu/dataset/synthetic_images/200x200/"
+    rootDir = os.path.abspath("./../CALVIS/dataset/cmu/")
+    imageDir = os.path.join(rootDir, "synthetic_images/200x200/")
 
     train_calvis_cmu_2d_dataset = CalvisCMU2DDataset(
         root_dir=rootDir, image_dir=imageDir
@@ -274,7 +267,7 @@ if __name__ == "__main__":
             len(train_calvis_cmu_2d_dataset)
             & len(fair_calvis_cmu_2d_dataset)
         )
-    ) == True, "Train and Fair datasets have the same lenght!"
+    ) is True, "Train and Fair datasets have the same lenght!"
 
     # just testing
     print(train_calvis_cmu_2d_dataset[958])
