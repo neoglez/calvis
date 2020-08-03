@@ -63,7 +63,7 @@ CALVIS/dataset/
 ## 2. or Create your own synthetic data
 ### 2.1. Preparation
 
-Please consider that in all cases, we install dependencies into a coda environment. The code was tested under ubuntu 16.04 with python 3.7.
+Please consider that in all cases, we install dependencies into a conda environment. The code was tested under ubuntu 16.04 with python 3.7.
 
 #### 2.1.1. SMPL data
 
