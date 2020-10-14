@@ -1,5 +1,8 @@
 import os
-from vtkplotter import Plotter, trimesh2vtk, settings, write, Text2D
+try:
+    from vtkplotter import Plotter, trimesh2vtk, settings, write, Text2D
+except:
+    from vedo import Plotter, trimesh2vtk, settings, write, Text2D
 import locale
 from calvis import Calvis
 

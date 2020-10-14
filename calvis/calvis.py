@@ -17,7 +17,6 @@ try:
     from vedo import trimesh2vtk
 except:
     from vtkplotter import trimesh2vtk
-     
 
 locale.setlocale(locale.LC_NUMERIC, "C")
 
