@@ -38,10 +38,14 @@ CALVIS: Chest, wAist and peLVIS circumference from 3D human Body meshes for Deep
 
 
 You can check [Storage info](https://github.com/neoglez/calvis#4-storage-info) for how much disk space they require and can do partial download.
-Download from the [Project page - coming soon](https://www.example.org)
+Download from our cloud (see bellow). College researchers have asked for an 8-meshes package and a small dataset with 100 intances, we also provide those.
+| Dataset  |  Download Link     | sha256sum      |  Password |
+|----------|:-------------:|---------------:|---------------:|
+| CALVIS (full) |  [CALVIS.tar.gz](https://cloudlogin03.world4you.com/index.php/s/VowlhwRR97y4xjK) | ab5d48c57677a7654c073e3148fc545cb335320961685886ed8ea8fef870b15e   | calvisdataset   |
+| Cavis, only 8 human meshes |    [cavis-8-human-meshes.tar.gz](https://cloudlogin03.world4you.com/index.php/s/x2PvyP21UUn84tO)   |   8c457ad064829c439b977ebc2e6487e3e5fbb09203d78efd226ab0793081aafd   | calvis-8-hm   |
+| Calvis, small dataset with 100 instances | [calvis-100-instances.tar.gz](https://cloudlogin03.world4you.com/index.php/s/F55LZZiQRMer45X) |  2812ea4cba4e521fa0dac96d7a2b2ef063e1099d8a7db09bab4ea285746ad417   | calvis-100-i    |
 
-
-The structure of the folders is as follows:
+The general structure of the folders is as follows:
 
 ``` shell
 CALVIS/dataset/
