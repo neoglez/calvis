@@ -14,9 +14,17 @@ import pickle
 import hbm
 import locale
 try:
-    from vedo import trimesh2vtk
+    from vedo import *
 except:
-    from vtkplotter import trimesh2vtk
+    pass
+try:
+    from vedo import trimesh2vtk as trimesh2vedo
+except:
+    pass
+try:
+    from vtkplotter import trimesh2vtk as trimesh2vedo
+except:
+    pass
 
 locale.setlocale(locale.LC_NUMERIC, "C")
 
@@ -261,7 +269,7 @@ class Calvis:
         # find the N nearest neighbors.
         # We have to this with vtkplotter because trimesh does not have this
         # functionality implemented (jet)
-        vtkactor = trimesh2vtk(self.trimesh)
+        vtkactor = trimesh2vedo(self.trimesh)
 
         nearest_neighbours = vtkactor.closestPoint(self.axilla_center, N=N)
         sorted_Y = nearest_neighbours[nearest_neighbours[:, 1].argsort()]
