@@ -42,7 +42,7 @@ Download from our cloud (see bellow). College researchers have asked for an 8-me
 | Dataset  |  Download Link     | sha256sum      |  Password |
 |----------|:-------------:|---------------:|---------------:|
 | CALVIS (full) |  [CALVIS.tar.gz](https://plusacat-my.sharepoint.com/:u:/g/personal/yansel_gonzalez-tejeda_stud_plus_ac_at/IQDlOfHqoVD5TZR58j9ZBmGzAQegfMyJWiFS_8uaL_id5YU?e=fjMMBX) | ab5d48c57677a7654c073e3148fc545cb335320961685886ed8ea8fef870b15e   | calvisdataset   |
-| Cavis, only 8 human meshes |    [cavis-8-human-meshes.tar.gz](https://plusacat-my.sharepoint.com/:u:/r/personal/yansel_gonzalez-tejeda_stud_plus_ac_at/Documents/calvis-8-human-meshes.tar.gz?csf=1&web=1&e=PJf8Oj)   |   8c457ad064829c439b977ebc2e6487e3e5fbb09203d78efd226ab0793081aafd   | calvis-8-hm   |
+| Cavis, only 8 human meshes |    [cavis-8-human-meshes.tar.gz](https://plusacat-my.sharepoint.com/:u:/g/personal/yansel_gonzalez-tejeda_stud_plus_ac_at/IQCii_5Y88C3S5d2jNTVM_xFAfO5DB9ugA9ZOKFNXZ44zU8?e=LNg6gi)   |   8c457ad064829c439b977ebc2e6487e3e5fbb09203d78efd226ab0793081aafd   | calvis-8-hm   |
 | Calvis, small dataset with 100 instances | [calvis-100-instances.tar.gz](https://plusacat-my.sharepoint.com/:u:/g/personal/yansel_gonzalez-tejeda_stud_plus_ac_at/IQBskaKfj8QrQYlzcsx3IM3TAXO_9cYTMsNjGsk2TpcdaeA?e=IjhUP9) |  2812ea4cba4e521fa0dac96d7a2b2ef063e1099d8a7db09bab4ea285746ad417   | calvis-100-i    |
 
 The general structure of the folders is as follows:
